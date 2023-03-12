@@ -21,9 +21,9 @@ export const PlayerCard: FC<PlayerCardProps> = ({
       </h2>
 
       <div className={styles.counter}>
-        <Button theme='danger'>-</Button>
+        <Button theme='danger' onClick={() => setScore(oldScore => oldScore-1)}>-</Button>
         <h2>{score}</h2>
-        <Button theme='success'>+</Button>
+        <Button theme='success' onClick={() => setScore(oldScore => oldScore+1)}>+</Button>
       </div>
     </div>
   )

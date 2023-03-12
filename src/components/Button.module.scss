@@ -8,6 +8,7 @@
   overflow: hidden;
   min-width: 40px;
   min-height: 40px;
+  user-select: none;
 
   * {
     z-index: 10;
@@ -18,7 +19,7 @@
     display: block;
     height: 100%;
     width: 100%;
-    transition: background-color .2s;
+    transition: background-color .1s;
     position: absolute;
     top: 0;
     left: 0;
