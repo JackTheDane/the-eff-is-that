@@ -1,27 +1,22 @@
-import { useState } from 'react'
-import styles from './App.module.scss';
-import { PictureZoomerSlideShow } from './components/PictureZoomerSlideShow'
-import { PlayerCard } from './components/PlayerCard';
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { Game } from "./pages/Game";
+import { Intro } from "./pages/Intro";
 
-const players = [
-  'Mille',
-  'Sebastian',
-  'Tilde',
-  'Mikkel'
-]
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Intro />
+  },
+  {
+    path: '/game',
+    element: <Game />
+  }
+]);
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <div className={styles.app}>
-      <PictureZoomerSlideShow />
-      <div className={styles.playerContainer}>
-        {players.map(player => (
-          <PlayerCard name={player} key={player} />
-        ))}
-      </div>
-    </div>
+    <RouterProvider router={router} />
   )
 }
 
