@@ -3,22 +3,41 @@ import { useCombinedClasses } from '../hooks/useCombinedClasses'
 import styles from "./Button.module.scss";
 
 type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
-  size?: 'medium' | 'large'
+  size?: 'medium' | 'large';
+  theme?: 'danger' | 'success' | 'neutral';
 }
+
+const getBackgroundColor = (theme: ButtonProps['theme']): string => {
+  switch (theme) {
+    case 'danger':
+      return 'red';
+
+    case 'success':
+      return 'green';
+
+    case 'neutral':
+    default:
+      return 'transparent';
+  }
+}
+
 
 export const Button: FC<ButtonProps> = ({
   className,
   size = 'medium',
+  theme = 'neutral',
   style,
   ...props
 }) => {
 
   const fontSize = size === 'medium' ? 18 : 24;
+  const backgroundColor = getBackgroundColor(theme);
 
   return (
     <button {...props} className={useCombinedClasses(className, styles.root)} style={{
+      backgroundColor,
+      fontSize,
       ...style,
-      fontSize
     }}></button>
   )
 }

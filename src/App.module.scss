@@ -1,0 +1,12 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.playerContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 40px;
+}

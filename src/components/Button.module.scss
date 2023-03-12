@@ -4,15 +4,41 @@
   padding: 4px 8px;
   cursor: pointer;
   border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+  min-width: 40px;
+  min-height: 40px;
 
-  transition: background-color .2s;
+  * {
+    z-index: 10;
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    transition: background-color .2s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+
+
 
   &:not(:disabled) {
     &:hover {
-      background-color: rgba($color: #fff, $alpha: .3);
+      &::before {
+        background-color: rgba($color: #fff, $alpha: .3);
+      }
     }
     &:active {
-      background-color: rgba($color: #fff, $alpha: .5);
+      &::before {
+        background-color: rgba($color: #fff, $alpha: .5);
+      }
     }
     &:focus{
       outline: none;

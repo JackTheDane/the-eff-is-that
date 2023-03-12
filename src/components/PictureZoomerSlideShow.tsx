@@ -57,7 +57,7 @@ export const PictureZoomerSlideShow = () => {
       </Button>
 
       <div className={styles.zoomerWrapper}>
-        <PictureZoomer {...selectedPicture} />
+        <PictureZoomer {...selectedPicture} key={slideIndex} />
       </div>
 
       <Button

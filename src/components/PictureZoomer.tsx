@@ -38,7 +38,7 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
 
   const onZoomIn = () => {
     setZoomIndex(oldZoomIndex => {
-      const newZoomIndex = oldZoomIndex - 1 ?? 0;
+      const newZoomIndex = oldZoomIndex + 1 ?? 0;
       return newZoomIndex;
     })
   }

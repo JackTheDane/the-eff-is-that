@@ -1,0 +1,28 @@
+.card {
+  padding: 8px;
+  border: 2px solid black;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  object-position: center center;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  gap: 8px;
+  margin-left: auto;
+}
