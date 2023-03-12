@@ -1,0 +1,19 @@
+.slideshow {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slideIndexButton {
+  height: 300px;
+}
+
+.zoomerWrapper {
+  padding: 0 20px;
+}
+
+.hidden {
+  pointer-events: none;
+  visibility: hidden;
+}
