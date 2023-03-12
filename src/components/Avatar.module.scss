@@ -1,0 +1,23 @@
+.avatar {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  object-position: center center;
+  position: relative;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.leading {
+  &::after {
+    content: '👑';
+    position: absolute;
+    display: block;
+    right: -4px;
+    top: -8px;
+    transform: rotate(20deg);
+    font-size: 20px;
+  }
+}
