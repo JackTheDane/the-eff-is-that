@@ -14,7 +14,7 @@ import santa from "../assets/santa.png";
 import silverOrnament from "../assets/silver_ornament.jpg";
 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCombinedClasses } from "../hooks/useCombinedClasses";
 
 const data: PictureZoomerProps[] = [
@@ -112,6 +112,24 @@ export const PictureZoomerSlideShow = () => {
       return newSlideIndex > newSlideIndex ? maxSlideIndex : newSlideIndex;
     });
   };
+
+  useEffect(() => {
+    const onKeyPress = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case 'ArrowLeft':
+          goToPreviousSlide()
+          break;
+
+        case 'ArrowRight':
+          goToNextSlide()
+          break;
+      }
+    }
+
+    document.addEventListener('keydown', onKeyPress)
+
+    return () => document.removeEventListener('keydown', onKeyPress)
+  }, []);
 
   const selectedPicture = data[slideIndex] ?? data[0];
 
