@@ -14,9 +14,9 @@ export type PictureZoomerProps = {
 
 const ZOOM_FACTOR = 100;
 
-const zoomSteps = [100, 150, 200, 250, 350, 500, 800, 1200, 2000, 2500];
+const zoomIncrements = [100, 150, 200, 250, 350, 500, 800, 1200, 1600, 2500];
 
-const maxZoomStepIndex = zoomSteps.length - 1;
+const maxZoomStepIndex = zoomIncrements.length - 1;
 
 export const PictureZoomer: FC<PictureZoomerProps> = ({
   name,
@@ -53,7 +53,7 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
   });
 
   const onReveal = () => setZoomIndex(0);
-  const zoomPercentage = zoomSteps[zoomIndex] ?? 100;
+  const zoomPercentage = zoomIncrements[zoomIndex] ?? 100;
 
   const title = zoomPercentage === 100 ? name : "What the f*ck is that?!";
 
