@@ -15,6 +15,7 @@ import silverOrnament from "../assets/silver_ornament.jpg";
 
 import { useEffect, useState } from "react";
 import { useCombinedClasses } from "../hooks/useCombinedClasses";
+import { useKeyboardEvent } from "../hooks/useKeyboardEvent";
 
 const data: PictureZoomerProps[] = [
   {
@@ -112,23 +113,17 @@ export const PictureZoomerSlideShow = () => {
     });
   };
 
-  useEffect(() => {
-    const onKeyPress = (event: KeyboardEvent) => {
-      switch (event.key) {
-        case "ArrowLeft":
-          goToPreviousSlide();
-          break;
+  useKeyboardEvent((event: KeyboardEvent) => {
+    switch (event.key) {
+      case "ArrowLeft":
+        goToPreviousSlide();
+        break;
 
-        case "ArrowRight":
-          goToNextSlide();
-          break;
-      }
-    };
-
-    document.addEventListener("keydown", onKeyPress);
-
-    return () => document.removeEventListener("keydown", onKeyPress);
-  }, []);
+      case "ArrowRight":
+        goToNextSlide();
+        break;
+    }
+  });
 
   const selectedPicture = data[slideIndex] ?? data[0];
 
