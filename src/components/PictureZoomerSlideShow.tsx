@@ -16,6 +16,7 @@ import silverOrnament from "../assets/silver_ornament.jpg";
 import { useEffect, useState } from "react";
 import { useCombinedClasses } from "../hooks/useCombinedClasses";
 import { useKeyboardEvent } from "../hooks/useKeyboardEvent";
+import { useNavigate } from "react-router-dom";
 
 const data: PictureZoomerProps[] = [
   {
@@ -95,6 +96,7 @@ const data: PictureZoomerProps[] = [
 const maxSlideIndex = data.length - 1;
 
 export const PictureZoomerSlideShow = () => {
+  const navigate = useNavigate();
   const [slideIndex, setSlideIndex] = useState(0);
 
   const goToPreviousSlide = () => {
@@ -144,16 +146,23 @@ export const PictureZoomerSlideShow = () => {
         <PictureZoomer {...selectedPicture} key={slideIndex} />
       </div>
 
-      <Button
-        onClick={goToNextSlide}
-        size="large"
-        className={useCombinedClasses(
-          styles.slideIndexButton,
-          slideIndex === maxSlideIndex && styles.hidden
-        )}
-      >
-        👉
-      </Button>
+      {slideIndex < maxSlideIndex ? (
+        <Button
+          onClick={goToNextSlide}
+          size="large"
+          className={styles.slideIndexButton}
+        >
+          👉
+        </Button>
+      ) : (
+        <Button
+          onClick={() => navigate("/winner")}
+          size="large"
+          className={styles.slideIndexButton}
+        >
+          👑
+        </Button>
+      )}
     </div>
   );
 };
