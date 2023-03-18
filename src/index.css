@@ -75,6 +75,7 @@ button:focus-visible {
 
 * {
   box-sizing: border-box;
+  user-select: none;
 }
 
 #root {

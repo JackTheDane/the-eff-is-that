@@ -1,24 +1,20 @@
-import { useState } from 'react'
-import styles from './Game.module.scss';
-import { PictureZoomerSlideShow } from '../components/PictureZoomerSlideShow'
-import { PlayerCard } from '../components/PlayerCard';
-
-const players = [
-  'Mille',
-  'Sebastian',
-  'Tilde',
-  'Mikkel'
-]
+import { useState } from "react";
+import styles from "./Game.module.scss";
+import { PictureZoomerSlideShow } from "../components/PictureZoomerSlideShow";
+import { PlayerCard, PlayerCardProps } from "../components/PlayerCard";
+import { useGameLobby } from "../hooks/useGameLobby";
 
 export function Game() {
+  const { players } = useGameLobby();
+
   return (
     <div className={styles.app}>
       <PictureZoomerSlideShow />
       <div className={styles.playerContainer}>
-        {players.map(player => (
-          <PlayerCard name={player} key={player} />
+        {players.map((player) => (
+          <PlayerCard {...player} key={player.name} />
         ))}
       </div>
     </div>
-  )
+  );
 }
