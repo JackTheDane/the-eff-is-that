@@ -1,5 +1,5 @@
-import { Avatar } from "../components/Avatar";
-import { useGameLobby } from "../hooks/useGameLobby";
+import { Avatar } from "../features/player/components/Avatar";
+import { useGameLobby } from "../features/gameLobby/hooks/useGameLobby";
 import styles from "./Winner.module.scss";
 
 export const Winner = () => {
@@ -19,7 +19,7 @@ export const Winner = () => {
           gap: 16,
         }}
       >
-        <Avatar name={winner.name} isLeading />
+        <Avatar avatarSeed={winner.avatarSeed} isLeading />
         <h1>{winner.name}!</h1>
       </div>
     </div>

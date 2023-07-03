@@ -1,22 +1,22 @@
-import { Button } from "./Button";
 import { PictureZoomer, PictureZoomerProps } from "./PictureZoomer";
 import styles from "./PictureZoomerSlideShow.module.scss";
-import charmander from "../assets/c.png";
-import biksemad from "../assets/biksemad.webp";
-import guldkorn from "../assets/guldkorn.jpg";
-import kat from "../assets/kat.jpg";
-import tommy from "../assets/tommy.jpg";
-import hagrid from "../assets/hagrid.jpg";
-import vanillaCoke from "../assets/vanilla_cherry_coke.png";
-import appelsin from "../assets/appelsin.jpg";
-import dronning from "../assets/dronning.jpg";
-import santa from "../assets/santa.png";
-import silverOrnament from "../assets/silver_ornament.jpg";
+import charmander from "../../../assets/c.png";
+import biksemad from "../../../assets/biksemad.webp";
+import guldkorn from "../../../assets/guldkorn.jpg";
+import kat from "../../../assets/kat.jpg";
+import tommy from "../../../assets/tommy.jpg";
+import hagrid from "../../../assets/hagrid.jpg";
+import vanillaCoke from "../../../assets/vanilla_cherry_coke.png";
+import appelsin from "../../../assets/appelsin.jpg";
+import dronning from "../../../assets/dronning.jpg";
+import santa from "../../../assets/santa.png";
+import silverOrnament from "../../../assets/silver_ornament.jpg";
 
-import { useEffect, useState } from "react";
-import { useCombinedClasses } from "../hooks/useCombinedClasses";
-import { useKeyboardEvent } from "../hooks/useKeyboardEvent";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../../components/Button";
+import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
+import { useKeyboardEvent } from "../../../hooks/useKeyboardEvent";
 
 const data: PictureZoomerProps[] = [
   {

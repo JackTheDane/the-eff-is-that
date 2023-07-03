@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { PlayerCardProps } from "./components/PlayerCard";
-import { PlayerInfo } from "./models/PlayerInfo";
 import { Game } from "./pages/Game";
 import { Intro } from "./pages/Intro";
+import { LobbyPage } from "./pages/LobbyPage";
 import { Winner } from "./pages/Winner";
 
 function App() {
@@ -19,6 +17,10 @@ function App() {
     {
       path: "/winner",
       element: <Winner />,
+    },
+    {
+      path: "/lobby",
+      element: <LobbyPage />,
     },
   ]);
 

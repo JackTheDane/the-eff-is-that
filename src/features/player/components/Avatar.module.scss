@@ -1,3 +1,9 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .avatar {
   height: 50px;
   width: 50px;
@@ -12,7 +18,7 @@
 
 .leading {
   &::after {
-    content: '👑';
+    content: "👑";
     position: absolute;
     display: block;
     right: -12px;

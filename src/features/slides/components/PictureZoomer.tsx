@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
-import { useKeyboardEvent } from "../hooks/useKeyboardEvent";
-import { Button } from "./Button";
+import { Button } from "../../../components/Button";
+import { useKeyboardEvent } from "../../../hooks/useKeyboardEvent";
 import styles from "./PictureZoomer.module.scss";
 
 export type PictureZoomerProps = {
@@ -52,7 +52,6 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
     }
   });
 
-  const onReveal = () => setZoomIndex(0);
   const zoomPercentage = zoomIncrements[zoomIndex] ?? 100;
 
   const title = zoomPercentage === 100 ? name : "What the f*ck is that?!";
@@ -78,7 +77,6 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
             <h3>{zoomPercentage} %</h3>
             <Button onClick={zoomIn}>🔍 +</Button>
           </div>
-          {/* <Button size='large' onClick={onReveal}>Revelio!</Button> */}
         </div>
       </div>
     </div>

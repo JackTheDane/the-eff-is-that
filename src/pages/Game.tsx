@@ -1,8 +1,7 @@
-import { useState } from "react";
 import styles from "./Game.module.scss";
-import { PictureZoomerSlideShow } from "../components/PictureZoomerSlideShow";
-import { PlayerCard, PlayerCardProps } from "../components/PlayerCard";
-import { useGameLobby } from "../hooks/useGameLobby";
+import { useGameLobby } from "../features/gameLobby/hooks/useGameLobby";
+import { PlayerCard } from "../features/player/components/PlayerCard";
+import { PictureZoomerSlideShow } from "../features/slides/components/PictureZoomerSlideShow";
 
 export function Game() {
   const { players } = useGameLobby();
@@ -12,7 +11,7 @@ export function Game() {
       <PictureZoomerSlideShow />
       <div className={styles.playerContainer}>
         {players.map((player) => (
-          <PlayerCard {...player} key={player.name} />
+          <PlayerCard {...player} status="playing" key={player.name} />
         ))}
       </div>
     </div>
