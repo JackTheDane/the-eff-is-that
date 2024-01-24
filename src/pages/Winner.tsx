@@ -1,4 +1,4 @@
-import { Avatar } from "../features/player/components/Avatar";
+import { Avatar } from "../features/avatar/components/Avatar";
 import { useGameLobby } from "../features/gameLobby/hooks/useGameLobby";
 import styles from "./Winner.module.scss";
 

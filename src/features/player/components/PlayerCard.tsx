@@ -1,19 +1,20 @@
 import { FC } from "react";
 import { Counter } from "../../../components/Counter";
-import { TextInput } from "../../../components/TextInput";
 import {
   useGameLobby,
   gameLobbyActions,
 } from "../../gameLobby/hooks/useGameLobby";
 import { PlayerInfo } from "../models/PlayerInfo";
-import { Avatar } from "./Avatar";
+import { Avatar } from "../../avatar/components/Avatar";
 import styles from "./PlayerCard.module.scss";
+import { TextInput } from "../../../components/inputs/TextInput";
 
 export type PlayerCardProps = PlayerInfo & {
   status?: "playing" | "editing" | "none";
 };
 
 export const PlayerCard: FC<PlayerCardProps> = ({
+  id,
   name,
   avatarSeed,
   score,
@@ -27,12 +28,12 @@ export const PlayerCard: FC<PlayerCardProps> = ({
 
   return (
     <div className={styles.card}>
-      <Avatar name={name} avatarSeed={avatarSeed} isLeading={isLeading} />
+      <Avatar avatarSeed={avatarSeed} isLeading={isLeading} />
       {status === "editing" ? (
         <TextInput
           value={name}
           onChange={(newName) =>
-            gameLobbyActions.player.edit({ name: newName })
+            gameLobbyActions.player.edit(id, { name: newName })
           }
         />
       ) : (

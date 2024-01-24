@@ -1,37 +1,29 @@
 import { FC } from "react";
-import { Button } from "../../../components/Button";
 import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
-import { PlayerInfo } from "../models/PlayerInfo";
+import { PlayerInfo } from "../../player/models/PlayerInfo";
 import styles from "./Avatar.module.scss";
+import { getAvatarImageUrl } from "../utils/getAvatarImageUrl";
 
 type AvatarProps = Pick<PlayerInfo, "avatarSeed"> & {
   isLeading?: boolean;
-  onRegenerateClick?: (newSeed: string) => void;
+  className?: string;
 };
 
 export const Avatar: FC<AvatarProps> = ({
   avatarSeed,
   isLeading,
-  onRegenerateClick,
+  className,
 }) => {
   return (
-    <div className={styles.wrapper}>
+    <div className={useCombinedClasses(className, styles.wrapper)}>
       <div
         className={useCombinedClasses(
           styles.avatar,
           isLeading && styles.leading
         )}
       >
-        <img
-          src={`https://api.dicebear.com/5.x/bottts/svg?seed=${avatarSeed}`}
-        />
+        <img src={getAvatarImageUrl(avatarSeed)} />
       </div>
-
-      {onRegenerateClick && (
-        <Button onClick={() => onRegenerateClick(Math.random().toString())}>
-          🔁
-        </Button>
-      )}
     </div>
   );
 };

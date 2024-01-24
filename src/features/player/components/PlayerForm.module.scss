@@ -1,0 +1,16 @@
+.playerForm {
+  display: grid;
+  column-gap: 8px;
+
+  grid-template-columns: auto 1fr auto;
+  max-width: 400px;
+}
+
+.nameInputWraper {
+  display: flex;
+  align-items: center;
+}
+
+.nameInput {
+  flex-grow: 1;
+}
