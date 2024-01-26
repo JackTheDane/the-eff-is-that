@@ -11,7 +11,9 @@ export const LobbyPage = () => {
     <div className={styles.lobby}>
       <div className={styles.header}>
         <Button onClick={() => navigate("/")}>👈 Back</Button>
-        <Button onClick={() => navigate("/game")}>🚀 Start game</Button>
+        <Button variant="success" onClick={() => navigate("/game")}>
+          🚀 Start game
+        </Button>
       </div>
       <div className={styles.formWrapper}>
         <PlayerForm />

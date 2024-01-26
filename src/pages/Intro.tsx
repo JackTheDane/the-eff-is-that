@@ -23,8 +23,8 @@ export const Intro = () => {
       >
         🔊
       </Button>
-      <Button theme="success" onClick={() => navigate("/lobby")}>
-        Start game
+      <Button variant="success" onClick={() => navigate("/lobby")}>
+        Create lobby
       </Button>
     </div>
   );

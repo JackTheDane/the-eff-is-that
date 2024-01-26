@@ -16,11 +16,11 @@ export const Counter: FunctionComponent<CounterProps> = ({
 }) => {
   return (
     <div className={styles.counter}>
-      <Button theme="danger" onClick={() => onDecrement()}>
+      <Button variant="danger" onClick={() => onDecrement()}>
         -
       </Button>
       <h2>{count}</h2>
-      <Button theme="success" onClick={() => onIncrement()}>
+      <Button variant="success" onClick={() => onIncrement()}>
         +
       </Button>
     </div>
