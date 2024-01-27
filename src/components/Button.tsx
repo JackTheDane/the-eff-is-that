@@ -7,17 +7,17 @@ type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
   variant?: "danger" | "success" | "neutral";
 };
 
-const getBackgroundColor = (theme: ButtonProps["variant"]): string => {
+const getButtonVariantClassName = (theme: ButtonProps["variant"]) => {
   switch (theme) {
     case "danger":
-      return "red";
+      return styles.danger;
 
     case "success":
-      return "green";
+      return styles.success;
 
     case "neutral":
     default:
-      return "transparent";
+      return null;
   }
 };
 
@@ -28,16 +28,16 @@ export const Button: FC<ButtonProps> = ({
   style,
   ...props
 }) => {
-  const fontSize = size === "medium" ? 18 : 24;
-  const backgroundColor = getBackgroundColor(theme);
-
   return (
     <button
       {...props}
-      className={useCombinedClasses(className, styles.root)}
+      className={useCombinedClasses(
+        className,
+        styles.root,
+        getButtonVariantClassName(theme)
+      )}
       style={{
-        backgroundColor,
-        fontSize,
+        fontSize: size === "medium" ? 18 : 24,
         ...style,
       }}
     ></button>

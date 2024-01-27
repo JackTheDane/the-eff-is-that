@@ -1,20 +1,12 @@
-import { FC } from "react";
-import { useGameLobby } from "../../gameLobby/hooks/useGameLobby";
-import { PlayerCard, PlayerCardProps } from "./PlayerCard";
+import { FC, ReactNode } from "react";
 import styles from "./PlayerCardContainer.module.scss";
 
-type PlayerCardContainerProps = Pick<PlayerCardProps, "status">;
+type PlayerCardContainerProps = {
+  children?: ReactNode;
+};
 
 export const PlayerCardContainer: FC<PlayerCardContainerProps> = ({
-  status,
+  children,
 }) => {
-  const { players } = useGameLobby();
-
-  return (
-    <div className={styles.playerContainer}>
-      {players.map((player) => (
-        <PlayerCard {...player} status={status} key={player.name} />
-      ))}
-    </div>
-  );
+  return <div className={styles.playerContainer}>{children}</div>;
 };

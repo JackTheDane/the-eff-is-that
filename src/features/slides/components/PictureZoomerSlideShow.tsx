@@ -1,4 +1,7 @@
-import { PictureZoomer, PictureZoomerProps } from "./PictureZoomer";
+import {
+  PictureZoomer,
+  PictureZoomerProps,
+} from "../../pictureZoomer/components/PictureZoomer";
 import styles from "./PictureZoomerSlideShow.module.scss";
 import charmander from "../../../assets/c.png";
 import biksemad from "../../../assets/biksemad.webp";

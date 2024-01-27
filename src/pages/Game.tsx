@@ -10,7 +10,11 @@ export function Game() {
   return (
     <div className={styles.app}>
       <PictureZoomerSlideShow />
-      <PlayerCardContainer status="playing" />
+      <PlayerCardContainer>
+        {players.map((player) => (
+          <PlayerCard {...player} status="playing" key={player.id} />
+        ))}
+      </PlayerCardContainer>
     </div>
   );
 }

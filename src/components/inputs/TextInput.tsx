@@ -1,4 +1,4 @@
-import React, { FunctionComponent, forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { useCombinedClasses } from "../../hooks/useCombinedClasses";
 import styles from "./TextInput.module.scss";
 

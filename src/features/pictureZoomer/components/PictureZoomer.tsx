@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import { Button } from "../../../components/Button";
 import { useKeyboardEvent } from "../../../hooks/useKeyboardEvent";
 import styles from "./PictureZoomer.module.scss";
+import { ZOOM_INCREMENTS, useZoomLevel } from "../hooks/useZoomLevel";
 
 export type PictureZoomerProps = {
   name: string;
@@ -12,33 +13,12 @@ export type PictureZoomerProps = {
   };
 };
 
-const ZOOM_FACTOR = 100;
-
-const zoomIncrements = [100, 150, 200, 250, 350, 500, 800, 1200, 1600, 2500];
-
-const maxZoomStepIndex = zoomIncrements.length - 1;
-
 export const PictureZoomer: FC<PictureZoomerProps> = ({
   name,
   src,
   transformCenter,
 }) => {
-  const [zoomIndex, setZoomIndex] = useState(maxZoomStepIndex);
-
-  const zoomOut = () => {
-    setZoomIndex((oldZoomIndex) => {
-      const newZoomIndex = oldZoomIndex - 1;
-
-      return newZoomIndex < 0 ? 0 : newZoomIndex;
-    });
-  };
-
-  const zoomIn = () => {
-    setZoomIndex((oldZoomIndex) => {
-      const newZoomIndex = oldZoomIndex + 1 ?? maxZoomStepIndex;
-      return newZoomIndex > maxZoomStepIndex ? maxZoomStepIndex : newZoomIndex;
-    });
-  };
+  const { zoomIn, zoomOut, zoomScale } = useZoomLevel();
 
   useKeyboardEvent((event: KeyboardEvent) => {
     switch (event.key) {
@@ -52,9 +32,8 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
     }
   });
 
-  const zoomPercentage = zoomIncrements[zoomIndex] ?? 100;
-
-  const title = zoomPercentage === 100 ? name : "What the f*ck is that?!";
+  const title =
+    zoomScale === ZOOM_INCREMENTS[0] ? name : "What the f*ck is that?!";
 
   return (
     <div className={styles.root}>
@@ -64,7 +43,7 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
           <img
             src={src}
             style={{
-              transform: `scale(${zoomPercentage / ZOOM_FACTOR})`,
+              transform: `scale(${zoomScale})`,
               transformOrigin: `${transformCenter?.x ?? 50}% ${
                 transformCenter?.y ?? 50
               }%`,
@@ -73,9 +52,19 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
         </div>
         <div className={styles.options}>
           <div className={styles.zoomOptions}>
-            <Button onClick={zoomOut}>🔍 -</Button>
-            <h3>{zoomPercentage} %</h3>
-            <Button onClick={zoomIn}>🔍 +</Button>
+            <Button
+              onClick={zoomOut}
+              disabled={ZOOM_INCREMENTS[0] === zoomScale}
+            >
+              🔍 -
+            </Button>
+            <h3>{zoomScale * 100} %</h3>
+            <Button
+              onClick={zoomIn}
+              disabled={ZOOM_INCREMENTS.at(-1) === zoomScale}
+            >
+              🔍 +
+            </Button>
           </div>
         </div>
       </div>

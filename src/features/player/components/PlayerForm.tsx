@@ -26,18 +26,13 @@ type PlayerFormProps = {
 export const PlayerForm: FC<PlayerFormProps> = ({
   playerInfo: initialPlayerInfo,
 }) => {
-  const {
-    control,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-    setValue,
-  } = useForm<PlayerInfoSchemaType>({
-    resolver: zodResolver(playerInfoSchema),
-    defaultValues: initialPlayerInfo ?? {
-      avatarSeed: generateAvatarSeed(),
-    },
-  });
+  const { control, handleSubmit, setValue, reset } =
+    useForm<PlayerInfoSchemaType>({
+      resolver: zodResolver(playerInfoSchema),
+      defaultValues: initialPlayerInfo ?? {
+        avatarSeed: generateAvatarSeed(),
+      },
+    });
 
   const avatarSeed = useWatch({
     control,
@@ -46,6 +41,7 @@ export const PlayerForm: FC<PlayerFormProps> = ({
 
   const [placeholderName, setPlaceholderName] = useState(generatePlayerName());
   const regenerateDefaultValue = () => {
+    reset();
     setPlaceholderName(generatePlayerName());
     setValue("avatarSeed", generateAvatarSeed());
   };

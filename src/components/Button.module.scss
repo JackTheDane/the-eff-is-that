@@ -1,6 +1,9 @@
 .root {
+  --button-background-color: transparent;
+  --button-disabled-color: transparent;
+
   border: none;
-  background-color: transparent;
+  background-color: var(--button-background-color);
   padding: 4px 8px;
   cursor: pointer;
   border-radius: 3px;
@@ -10,16 +13,20 @@
   min-height: 40px;
   user-select: none;
 
+  &:disabled {
+    background-color: var(--button-disabled-color);
+    cursor: initial;
+  }
+
   * {
     z-index: 10;
   }
 
   &::before {
-    content: '';
+    content: "";
     display: block;
     height: 100%;
     width: 100%;
-    transition: background-color .1s;
     position: absolute;
     top: 0;
     left: 0;
@@ -28,21 +35,34 @@
     z-index: 0;
   }
 
-
+  &,
+  &::before {
+    transition: background-color 0.1s;
+  }
 
   &:not(:disabled) {
     &:hover {
       &::before {
-        background-color: rgba($color: #fff, $alpha: .3);
+        background-color: rgba($color: #fff, $alpha: 0.3);
       }
     }
     &:active {
       &::before {
-        background-color: rgba($color: #fff, $alpha: .5);
+        background-color: rgba($color: #fff, $alpha: 0.5);
       }
     }
-    &:focus{
+    &:focus {
       outline: none;
     }
+  }
+
+  &.success {
+    --button-background-color: hsl(120, 100%, 25%);
+    --button-disabled-color: hsl(120, 10%, 15%);
+  }
+
+  &.danger {
+    --button-background-color: hsl(0, 100%, 50%);
+    --button-disabled-color: hsl(0, 15%, 50%);
   }
 }

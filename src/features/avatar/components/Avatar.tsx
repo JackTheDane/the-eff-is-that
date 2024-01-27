@@ -1,8 +1,9 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
 import { PlayerInfo } from "../../player/models/PlayerInfo";
 import styles from "./Avatar.module.scss";
 import { getAvatarImageUrl } from "../utils/getAvatarImageUrl";
+import fallbackAvatarSrc from "../../../assets/fallback-avatar.jpg";
 
 type AvatarProps = Pick<PlayerInfo, "avatarSeed"> & {
   isLeading?: boolean;
@@ -14,6 +15,14 @@ export const Avatar: FC<AvatarProps> = ({
   isLeading,
   className,
 }) => {
+  const [imageSrc, setImageSrc] = useState(getAvatarImageUrl(avatarSeed));
+
+  useEffect(() => {
+    setImageSrc(getAvatarImageUrl(avatarSeed));
+  }, [avatarSeed]);
+
+  const onImageLoadError = () => setImageSrc(fallbackAvatarSrc);
+
   return (
     <div className={useCombinedClasses(className, styles.wrapper)}>
       <div
@@ -22,7 +31,7 @@ export const Avatar: FC<AvatarProps> = ({
           isLeading && styles.leading
         )}
       >
-        <img src={getAvatarImageUrl(avatarSeed)} />
+        <img src={imageSrc} onError={onImageLoadError} />
       </div>
     </div>
   );
