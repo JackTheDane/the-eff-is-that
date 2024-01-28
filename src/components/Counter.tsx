@@ -19,7 +19,7 @@ export const Counter: FunctionComponent<CounterProps> = ({
       <Button variant="danger" onClick={() => onDecrement()}>
         -
       </Button>
-      <h2>{count}</h2>
+      <h3>{count}</h3>
       <Button variant="success" onClick={() => onIncrement()}>
         +
       </Button>

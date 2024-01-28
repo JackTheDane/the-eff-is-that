@@ -10,7 +10,7 @@ import styles from "./PlayerCard.module.scss";
 import { TextInput } from "../../../components/inputs/TextInput";
 
 export type PlayerCardProps = PlayerInfo & {
-  status?: "playing" | "editing" | "none";
+  status?: "playing" | "editing" | "display";
 };
 
 export const PlayerCard: FC<PlayerCardProps> = ({
@@ -18,7 +18,7 @@ export const PlayerCard: FC<PlayerCardProps> = ({
   name,
   avatarSeed,
   score,
-  status = "none",
+  status = "display",
 }) => {
   const { players } = useGameLobby();
   const isLeading =
@@ -37,7 +37,20 @@ export const PlayerCard: FC<PlayerCardProps> = ({
           }
         />
       ) : (
-        <h2>{name}</h2>
+        <div>
+          <h2>{name}</h2>
+          {status === "display" && (
+            <h3
+              style={{
+                textAlign: "center",
+                fontStyle: "italic",
+                fontWeight: 400,
+              }}
+            >
+              {score} {Math.abs(score) === 1 ? "point" : "points"}
+            </h3>
+          )}
+        </div>
       )}
 
       {status === "playing" && (
