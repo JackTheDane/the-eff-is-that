@@ -129,16 +129,27 @@ export const PictureZoomerSlideShow = () => {
 
   return (
     <div className={styles.slideshow}>
-      <Button
-        onClick={goToPreviousSlide}
-        size="large"
-        className={useCombinedClasses(
-          styles.slideIndexButton,
-          slideIndex === 0 && styles.hidden
-        )}
-      >
-        👈
-      </Button>
+      {slideIndex > 0 ? (
+        <Button
+          onClick={goToPreviousSlide}
+          size="large"
+          className={useCombinedClasses(
+            styles.slideIndexButton,
+            slideIndex === 0 && styles.hidden
+          )}
+        >
+          👈
+        </Button>
+      ) : (
+        <Button
+          onClick={() => navigate(ROUTES.winner)}
+          size="large"
+          className={styles.slideIndexButton}
+        >
+          <span>☕</span>
+          Lobby
+        </Button>
+      )}
 
       <div className={styles.zoomerWrapper}>
         <PictureZoomer {...selectedPicture} key={slideIndex} />
