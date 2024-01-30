@@ -43,15 +43,13 @@ export const gameLobbyActions = {
     },
     delete(id: PlayerInfo["id"]) {
       useGameLobby.setState(({ players }) => ({
-        players: players.filter(({ name }) => name !== id),
+        players: players.filter((player) => player.id !== id),
       }));
     },
     edit(playerId: PlayerInfo["id"], updatedInfo: Partial<MutablePlayerInfo>) {
       useGameLobby.setState(({ players }) => ({
         players: players.map((player) =>
-          updatedInfo.name === player.name
-            ? { ...player, ...updatedInfo }
-            : player
+          playerId === player.id ? { ...player, ...updatedInfo } : player
         ),
       }));
     },

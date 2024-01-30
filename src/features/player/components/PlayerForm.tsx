@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo, type FC, useState } from "react";
+import { type FC, useState, type ComponentPropsWithoutRef } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { FormTextInput } from "../../../components/inputs/form/FormTextInput";
@@ -7,10 +7,11 @@ import { PlayerInfo } from "../models/PlayerInfo";
 import { gameLobbyActions } from "../../gameLobby/hooks/useGameLobby";
 import { Avatar } from "../../avatar/components/Avatar";
 import styles from "./PlayerForm.module.scss";
-import { Button } from "../../../components/Button";
+import { Button, ButtonProps } from "../../../components/Button";
 import { AvatarRegenerationButton } from "../../avatar/components/AvatarRegenerationButton";
 import { generateAvatarSeed } from "../../avatar/utils/generateAvatarSeed";
 import { generatePlayerName } from "../utils/generatePlayerName";
+import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
 
 const playerInfoSchema = z.object({
   name: z.string().max(100).optional(),
@@ -21,10 +22,20 @@ type PlayerInfoSchemaType = z.infer<typeof playerInfoSchema>;
 
 type PlayerFormProps = {
   playerInfo?: PlayerInfo;
-};
+  submitButtonProps: ButtonProps;
+  onSubmit(playerInfo: Pick<PlayerInfo, "name" | "avatarSeed">): void;
+  cancelButtonProps?: ButtonProps;
+  resetOnSubmit?: boolean;
+} & Omit<ComponentPropsWithoutRef<"form">, "onSubmit">;
 
 export const PlayerForm: FC<PlayerFormProps> = ({
   playerInfo: initialPlayerInfo,
+  submitButtonProps,
+  onSubmit,
+  cancelButtonProps,
+  resetOnSubmit = false,
+  className,
+  ...props
 }) => {
   const { control, handleSubmit, setValue, reset } =
     useForm<PlayerInfoSchemaType>({
@@ -48,26 +59,15 @@ export const PlayerForm: FC<PlayerFormProps> = ({
 
   return (
     <form
-      className={styles.playerForm}
-      onSubmit={handleSubmit(
-        (values) => {
-          const newPlayerName = values.name || placeholderName;
+      className={useCombinedClasses(className, styles.playerForm)}
+      onSubmit={handleSubmit((data) => {
+        onSubmit({ ...data, name: data.name ?? placeholderName });
 
-          if (initialPlayerInfo) {
-            gameLobbyActions.player.edit(initialPlayerInfo.id, {
-              ...values,
-              name: newPlayerName,
-            });
-            return;
-          }
-
-          gameLobbyActions.player.add({ ...values, name: newPlayerName });
+        if (resetOnSubmit) {
           regenerateDefaultValue();
-        },
-        (error) => {
-          console.log("Failed to add", { error });
         }
-      )}
+      })}
+      {...props}
     >
       <Avatar avatarSeed={avatarSeed} />
       <div className={styles.nameInputWraper}>
@@ -79,7 +79,16 @@ export const PlayerForm: FC<PlayerFormProps> = ({
           placeholder={placeholderName}
         />
       </div>
-      <Button type="submit">+ Add</Button>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+        }}
+      >
+        <Button type="submit" {...submitButtonProps} />
+        {cancelButtonProps && <Button type="button" {...cancelButtonProps} />}
+      </div>
       <AvatarRegenerationButton
         onRegenerateClick={(newSeed) => setValue("avatarSeed", newSeed)}
       />

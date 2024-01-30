@@ -14,6 +14,7 @@ export const AvatarRegenerationButton = ({
     <Button
       onClick={() => onRegenerateClick(generateAvatarSeed())}
       className={className}
+      size="small"
       type="button"
     >
       🔁

@@ -5,6 +5,7 @@ import { useGameLobby } from "../features/gameLobby/hooks/useGameLobby";
 import { PlayerCard } from "../features/player/components/PlayerCard";
 import styles from "./Winner.module.scss";
 import { PlayerInfo } from "../features/player/models/PlayerInfo";
+import { ROUTES } from "../routes";
 
 export const Winner = () => {
   const navigate = useNavigate();
@@ -23,12 +24,15 @@ export const Winner = () => {
     }, new Map<number, PlayerInfo[]>())
     .values();
 
-  if (winners.length === 0) {
-    return <Navigate to="/" replace />;
+  if (!winners?.length) {
+    return <Navigate to={ROUTES.home} replace />;
   }
 
   return (
     <div className={styles.root}>
+      <Button size="large" onClick={() => navigate(-1)}>
+        👈 Back to game
+      </Button>
       <h1 style={{ fontStyle: "italic", fontWeight: 300 }}>Winner winner</h1>
       {winners.map((winner) => (
         <div
@@ -36,8 +40,9 @@ export const Winner = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: 16,
+            gap: 8,
           }}
+          key={winner.id}
         >
           <Avatar avatarSeed={winner.avatarSeed} isLeading />
           <div>
@@ -56,12 +61,28 @@ export const Winner = () => {
       ))}
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {runnerUps.flat().flatMap((player) => (
-          <PlayerCard {...player} />
+          <PlayerCard playerInfo={player} key={player.id} />
         ))}
       </div>
-      <Button size="large" variant="success" onClick={() => navigate("/lobby")}>
-        🔁 Play again?
-      </Button>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          gap: 8,
+        }}
+      >
+        <Button
+          size="large"
+          variant="success"
+          onClick={() => navigate(ROUTES.lobby)}
+        >
+          🔁 Play again?
+        </Button>
+        <Button onClick={() => navigate(ROUTES.home)}>
+          🏠 Go to front page
+        </Button>
+      </div>
     </div>
   );
 };

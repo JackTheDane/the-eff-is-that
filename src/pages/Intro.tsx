@@ -3,6 +3,7 @@ import { Button } from "../components/Button";
 import styles from "./Intro.module.scss";
 import soundClip from "../assets/what-is-that.mp3";
 import { useRef } from "react";
+import { ROUTES } from "../routes";
 
 export const Intro = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export const Intro = () => {
       >
         🔊
       </Button>
-      <Button variant="success" onClick={() => navigate("/lobby")}>
+      <Button variant="success" onClick={() => navigate(ROUTES.lobby)}>
         Create lobby
       </Button>
     </div>

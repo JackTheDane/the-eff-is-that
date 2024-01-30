@@ -1,9 +1,11 @@
-import React, { FC } from "react";
+import type { ComponentPropsWithoutRef, FC } from "react";
 import { useCombinedClasses } from "../hooks/useCombinedClasses";
 import styles from "./Button.module.scss";
 
-type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
-  size?: "medium" | "large";
+type ButtonSize = "small" | "medium" | "large";
+
+export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
+  size?: ButtonSize;
   variant?: "danger" | "success" | "neutral";
 };
 
@@ -21,11 +23,23 @@ const getButtonVariantClassName = (theme: ButtonProps["variant"]) => {
   }
 };
 
+const getButtonSizeClassName = (theme: ButtonSize) => {
+  switch (theme) {
+    case "small":
+      return styles.small;
+
+    case "medium":
+      return styles.medium;
+
+    case "large":
+      return styles.large;
+  }
+};
+
 export const Button: FC<ButtonProps> = ({
   className,
   size = "medium",
-  variant: theme = "neutral",
-  style,
+  variant = "neutral",
   ...props
 }) => {
   return (
@@ -34,12 +48,9 @@ export const Button: FC<ButtonProps> = ({
       className={useCombinedClasses(
         className,
         styles.root,
-        getButtonVariantClassName(theme)
+        getButtonVariantClassName(variant),
+        getButtonSizeClassName(size)
       )}
-      style={{
-        fontSize: size === "medium" ? 18 : 24,
-        ...style,
-      }}
     ></button>
   );
 };

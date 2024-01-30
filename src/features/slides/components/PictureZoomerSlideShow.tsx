@@ -15,11 +15,12 @@ import dronning from "../../../assets/dronning.jpg";
 import santa from "../../../assets/santa.png";
 import silverOrnament from "../../../assets/silver_ornament.jpg";
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../../components/Button";
 import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
 import { useKeyboardEvent } from "../../../hooks/useKeyboardEvent";
+import { ROUTES } from "../../../routes";
+import clamp from "lodash/clamp";
 
 const data: PictureZoomerProps[] = [
   {
@@ -100,22 +101,16 @@ const maxSlideIndex = data.length - 1;
 
 export const PictureZoomerSlideShow = () => {
   const navigate = useNavigate();
-  const [slideIndex, setSlideIndex] = useState(0);
+  const { slideIndex: slideIndexString } = useParams();
+  const slideIndex = slideIndexString ? Number(slideIndexString) : 0;
+  // const [slideIndex, setSlideIndex] = useState(0);
 
   const goToPreviousSlide = () => {
-    setSlideIndex((prevSlideIndex) => {
-      const newSlideIndex = prevSlideIndex - 1;
-
-      return newSlideIndex < 0 ? 0 : newSlideIndex;
-    });
+    navigate(ROUTES.game.route(clamp(slideIndex - 1, 0, maxSlideIndex)));
   };
 
   const goToNextSlide = () => {
-    setSlideIndex((prevSlideIndex) => {
-      const newSlideIndex = prevSlideIndex + 1;
-
-      return newSlideIndex > maxSlideIndex ? maxSlideIndex : newSlideIndex;
-    });
+    navigate(ROUTES.game.route(clamp(slideIndex + 1, 0, maxSlideIndex)));
   };
 
   useKeyboardEvent((event: KeyboardEvent) => {
@@ -159,7 +154,7 @@ export const PictureZoomerSlideShow = () => {
         </Button>
       ) : (
         <Button
-          onClick={() => navigate("/winner")}
+          onClick={() => navigate(ROUTES.winner)}
           size="large"
           className={styles.slideIndexButton}
         >

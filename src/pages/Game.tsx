@@ -12,7 +12,7 @@ export function Game() {
       <PictureZoomerSlideShow />
       <PlayerCardContainer>
         {players.map((player) => (
-          <PlayerCard {...player} status="playing" key={player.id} />
+          <PlayerCard playerInfo={player} status="playing" key={player.id} />
         ))}
       </PlayerCardContainer>
     </div>
