@@ -1,22 +1,26 @@
-import { Button } from "./Button";
-import { PictureZoomer, PictureZoomerProps } from "./PictureZoomer";
+import {
+  PictureZoomer,
+  PictureZoomerProps,
+} from "../../pictureZoomer/components/PictureZoomer";
 import styles from "./PictureZoomerSlideShow.module.scss";
-import charmander from "../assets/c.png";
-import biksemad from "../assets/biksemad.webp";
-import guldkorn from "../assets/guldkorn.jpg";
-import kat from "../assets/kat.jpg";
-import tommy from "../assets/tommy.jpg";
-import hagrid from "../assets/hagrid.jpg";
-import vanillaCoke from "../assets/vanilla_cherry_coke.png";
-import appelsin from "../assets/appelsin.jpg";
-import dronning from "../assets/dronning.jpg";
-import santa from "../assets/santa.png";
-import silverOrnament from "../assets/silver_ornament.jpg";
+import charmander from "../../../assets/c.png";
+import biksemad from "../../../assets/biksemad.webp";
+import guldkorn from "../../../assets/guldkorn.jpg";
+import kat from "../../../assets/kat.jpg";
+import tommy from "../../../assets/tommy.jpg";
+import hagrid from "../../../assets/hagrid.jpg";
+import vanillaCoke from "../../../assets/vanilla_cherry_coke.png";
+import appelsin from "../../../assets/appelsin.jpg";
+import dronning from "../../../assets/dronning.jpg";
+import santa from "../../../assets/santa.png";
+import silverOrnament from "../../../assets/silver_ornament.jpg";
 
-import { useEffect, useState } from "react";
-import { useCombinedClasses } from "../hooks/useCombinedClasses";
-import { useKeyboardEvent } from "../hooks/useKeyboardEvent";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "../../../components/Button";
+import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
+import { useKeyboardEvent } from "../../../hooks/useKeyboardEvent";
+import { ROUTES } from "../../../routes";
+import clamp from "lodash/clamp";
 
 const data: PictureZoomerProps[] = [
   {
@@ -97,22 +101,16 @@ const maxSlideIndex = data.length - 1;
 
 export const PictureZoomerSlideShow = () => {
   const navigate = useNavigate();
-  const [slideIndex, setSlideIndex] = useState(0);
+  const { slideIndex: slideIndexString } = useParams();
+  const slideIndex = slideIndexString ? Number(slideIndexString) : 0;
+  // const [slideIndex, setSlideIndex] = useState(0);
 
   const goToPreviousSlide = () => {
-    setSlideIndex((prevSlideIndex) => {
-      const newSlideIndex = prevSlideIndex - 1;
-
-      return newSlideIndex < 0 ? 0 : newSlideIndex;
-    });
+    navigate(ROUTES.game.route(clamp(slideIndex - 1, 0, maxSlideIndex)));
   };
 
   const goToNextSlide = () => {
-    setSlideIndex((prevSlideIndex) => {
-      const newSlideIndex = prevSlideIndex + 1;
-
-      return newSlideIndex > maxSlideIndex ? maxSlideIndex : newSlideIndex;
-    });
+    navigate(ROUTES.game.route(clamp(slideIndex + 1, 0, maxSlideIndex)));
   };
 
   useKeyboardEvent((event: KeyboardEvent) => {
@@ -131,16 +129,27 @@ export const PictureZoomerSlideShow = () => {
 
   return (
     <div className={styles.slideshow}>
-      <Button
-        onClick={goToPreviousSlide}
-        size="large"
-        className={useCombinedClasses(
-          styles.slideIndexButton,
-          slideIndex === 0 && styles.hidden
-        )}
-      >
-        👈
-      </Button>
+      {slideIndex > 0 ? (
+        <Button
+          onClick={goToPreviousSlide}
+          size="large"
+          className={useCombinedClasses(
+            styles.slideIndexButton,
+            slideIndex === 0 && styles.hidden
+          )}
+        >
+          👈
+        </Button>
+      ) : (
+        <Button
+          onClick={() => navigate(ROUTES.winner)}
+          size="large"
+          className={styles.slideIndexButton}
+        >
+          <span>☕</span>
+          Lobby
+        </Button>
+      )}
 
       <div className={styles.zoomerWrapper}>
         <PictureZoomer {...selectedPicture} key={slideIndex} />
@@ -156,7 +165,7 @@ export const PictureZoomerSlideShow = () => {
         </Button>
       ) : (
         <Button
-          onClick={() => navigate("/winner")}
+          onClick={() => navigate(ROUTES.winner)}
           size="large"
           className={styles.slideIndexButton}
         >

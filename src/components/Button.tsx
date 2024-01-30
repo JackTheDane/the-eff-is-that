@@ -1,43 +1,56 @@
-import React, { FC } from 'react'
-import { useCombinedClasses } from '../hooks/useCombinedClasses'
+import type { ComponentPropsWithoutRef, FC } from "react";
+import { useCombinedClasses } from "../hooks/useCombinedClasses";
 import styles from "./Button.module.scss";
 
-type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
-  size?: 'medium' | 'large';
-  theme?: 'danger' | 'success' | 'neutral';
-}
+type ButtonSize = "small" | "medium" | "large";
 
-const getBackgroundColor = (theme: ButtonProps['theme']): string => {
+export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
+  size?: ButtonSize;
+  variant?: "danger" | "success" | "neutral";
+};
+
+const getButtonVariantClassName = (theme: ButtonProps["variant"]) => {
   switch (theme) {
-    case 'danger':
-      return 'red';
+    case "danger":
+      return styles.danger;
 
-    case 'success':
-      return 'green';
+    case "success":
+      return styles.success;
 
-    case 'neutral':
+    case "neutral":
     default:
-      return 'transparent';
+      return null;
   }
-}
+};
 
+const getButtonSizeClassName = (theme: ButtonSize) => {
+  switch (theme) {
+    case "small":
+      return styles.small;
+
+    case "medium":
+      return styles.medium;
+
+    case "large":
+      return styles.large;
+  }
+};
 
 export const Button: FC<ButtonProps> = ({
   className,
-  size = 'medium',
-  theme = 'neutral',
-  style,
+  size = "medium",
+  variant = "neutral",
   ...props
 }) => {
-
-  const fontSize = size === 'medium' ? 18 : 24;
-  const backgroundColor = getBackgroundColor(theme);
-
   return (
-    <button {...props} className={useCombinedClasses(className, styles.root)} style={{
-      backgroundColor,
-      fontSize,
-      ...style,
-    }}></button>
-  )
-}
+    <button
+      {...props}
+      className={useCombinedClasses(
+        className,
+        styles.root,
+        getButtonVariantClassName(variant),
+        getButtonSizeClassName(size)
+      )}
+    ></button>
+  );
+};

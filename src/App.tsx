@@ -1,23 +1,26 @@
-import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { PlayerCardProps } from "./components/PlayerCard";
-import { PlayerInfo } from "./models/PlayerInfo";
 import { Game } from "./pages/Game";
 import { Intro } from "./pages/Intro";
+import { LobbyPage } from "./pages/LobbyPage";
 import { Winner } from "./pages/Winner";
+import { ROUTES } from "./routes";
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: ROUTES.home,
       element: <Intro />,
     },
     {
-      path: "/game",
+      path: ROUTES.lobby,
+      element: <LobbyPage />,
+    },
+    {
+      path: ROUTES.game.pattern,
       element: <Game />,
     },
     {
-      path: "/winner",
+      path: ROUTES.winner,
       element: <Winner />,
     },
   ]);

@@ -1,0 +1,12 @@
+.card {
+  padding: 8px;
+  border: 2px solid black;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.editForm {
+  flex-grow: 1;
+}

@@ -84,6 +84,11 @@ button:focus-visible {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  height: 100lvh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  overflow: auto;
 }
 
 h1,
