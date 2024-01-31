@@ -11,10 +11,10 @@ export const useGameLobby = create<GameLobbyStore>((set) => ({
   players: [],
 }));
 
-const setPlayerScoreDelta = (playerName: string, scoreDelta: number) =>
+const setPlayerScoreDelta = (playerId: string, scoreDelta: number) =>
   useGameLobby.setState(({ players }) => ({
     players: players.map((player) =>
-      player.name === playerName
+      player.id === playerId
         ? {
             ...player,
             score: player.score + scoreDelta,
@@ -25,11 +25,19 @@ const setPlayerScoreDelta = (playerName: string, scoreDelta: number) =>
 
 export const gameLobbyActions = {
   score: {
-    increment(playerName: string) {
-      setPlayerScoreDelta(playerName, 1);
+    increment(playerId: string) {
+      setPlayerScoreDelta(playerId, 1);
     },
-    decrement(playerName: string) {
-      setPlayerScoreDelta(playerName, -1);
+    decrement(playerId: string) {
+      setPlayerScoreDelta(playerId, -1);
+    },
+    resetAll() {
+      useGameLobby.setState(({ players }) => ({
+        players: players.map((player) => ({
+          ...player,
+          score: 0,
+        })),
+      }));
     },
   },
   player: {

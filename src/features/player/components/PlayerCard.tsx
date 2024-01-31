@@ -28,7 +28,7 @@ export const PlayerCard: FC<PlayerCardProps> = ({
   }, [initialStatus]);
 
   const isLeading =
-    status === "playing" &&
+    (status === "playing" || status === "display") &&
     score > 0 &&
     players.every((otherPlayer) => score >= otherPlayer.score);
 
@@ -50,7 +50,10 @@ export const PlayerCard: FC<PlayerCardProps> = ({
             setStatus(initialStatus);
           }}
           submitButtonProps={{ children: "💾 Save" }}
-          cancelButtonProps={{ children: "❌ Cancel" }}
+          cancelButtonProps={{
+            children: "❌ Cancel",
+            onClick: () => setStatus(initialStatus),
+          }}
         />
       );
     }
@@ -90,8 +93,8 @@ export const PlayerCard: FC<PlayerCardProps> = ({
         {status === "playing" && (
           <Counter
             count={score}
-            onDecrement={() => gameLobbyActions.score.decrement(name)}
-            onIncrement={() => gameLobbyActions.score.increment(name)}
+            onDecrement={() => gameLobbyActions.score.decrement(id)}
+            onIncrement={() => gameLobbyActions.score.increment(id)}
           />
         )}
       </>

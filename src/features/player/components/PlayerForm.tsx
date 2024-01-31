@@ -61,7 +61,7 @@ export const PlayerForm: FC<PlayerFormProps> = ({
     <form
       className={useCombinedClasses(className, styles.playerForm)}
       onSubmit={handleSubmit((data) => {
-        onSubmit({ ...data, name: data.name ?? placeholderName });
+        onSubmit({ ...data, name: data.name ? data.name : placeholderName });
 
         if (resetOnSubmit) {
           regenerateDefaultValue();

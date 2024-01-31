@@ -15,7 +15,7 @@ import dronning from "../../../assets/dronning.jpg";
 import santa from "../../../assets/santa.png";
 import silverOrnament from "../../../assets/silver_ornament.jpg";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../../components/Button";
 import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
 import { useKeyboardEvent } from "../../../hooks/useKeyboardEvent";
@@ -101,16 +101,23 @@ const maxSlideIndex = data.length - 1;
 
 export const PictureZoomerSlideShow = () => {
   const navigate = useNavigate();
-  const { slideIndex: slideIndexString } = useParams();
+  const { slideIndex: slideIndexString, quizId } = useParams();
   const slideIndex = slideIndexString ? Number(slideIndexString) : 0;
-  // const [slideIndex, setSlideIndex] = useState(0);
+
+  if (!quizId) {
+    return <Navigate to={ROUTES.home} />;
+  }
 
   const goToPreviousSlide = () => {
-    navigate(ROUTES.game.route(clamp(slideIndex - 1, 0, maxSlideIndex)));
+    navigate(
+      ROUTES.quiz.play.route(quizId, clamp(slideIndex - 1, 0, maxSlideIndex))
+    );
   };
 
   const goToNextSlide = () => {
-    navigate(ROUTES.game.route(clamp(slideIndex + 1, 0, maxSlideIndex)));
+    navigate(
+      ROUTES.quiz.play.route(quizId, clamp(slideIndex + 1, 0, maxSlideIndex))
+    );
   };
 
   useKeyboardEvent((event: KeyboardEvent) => {
@@ -142,7 +149,7 @@ export const PictureZoomerSlideShow = () => {
         </Button>
       ) : (
         <Button
-          onClick={() => navigate(ROUTES.winner)}
+          onClick={() => navigate(ROUTES.lobby)}
           size="large"
           className={styles.slideIndexButton}
         >
@@ -165,7 +172,7 @@ export const PictureZoomerSlideShow = () => {
         </Button>
       ) : (
         <Button
-          onClick={() => navigate(ROUTES.winner)}
+          onClick={() => navigate(ROUTES.quiz.winner.route(quizId))}
           size="large"
           className={styles.slideIndexButton}
         >

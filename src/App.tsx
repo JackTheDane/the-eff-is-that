@@ -4,6 +4,7 @@ import { Intro } from "./pages/Intro";
 import { LobbyPage } from "./pages/LobbyPage";
 import { Winner } from "./pages/Winner";
 import { ROUTES } from "./routes";
+import { EditQuizPage } from "./pages/EditQuizPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -12,15 +13,19 @@ function App() {
       element: <Intro />,
     },
     {
+      path: ROUTES.quiz.edit.pattern,
+      element: <EditQuizPage />,
+    },
+    {
       path: ROUTES.lobby,
       element: <LobbyPage />,
     },
     {
-      path: ROUTES.game.pattern,
+      path: ROUTES.quiz.play.pattern,
       element: <Game />,
     },
     {
-      path: ROUTES.winner,
+      path: ROUTES.quiz.winner.pattern,
       element: <Winner />,
     },
   ]);
