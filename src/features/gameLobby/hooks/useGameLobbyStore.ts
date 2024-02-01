@@ -7,12 +7,12 @@ type GameLobbyStore = {
 
 type MutablePlayerInfo = Omit<PlayerInfo, "id" | "score">;
 
-export const useGameLobby = create<GameLobbyStore>((set) => ({
+export const useGameLobbyStore = create<GameLobbyStore>((set) => ({
   players: [],
 }));
 
 const setPlayerScoreDelta = (playerId: string, scoreDelta: number) =>
-  useGameLobby.setState(({ players }) => ({
+  useGameLobbyStore.setState(({ players }) => ({
     players: players.map((player) =>
       player.id === playerId
         ? {
@@ -23,7 +23,7 @@ const setPlayerScoreDelta = (playerId: string, scoreDelta: number) =>
     ),
   }));
 
-export const gameLobbyActions = {
+export const gameLobbyStoreActions = {
   score: {
     increment(playerId: string) {
       setPlayerScoreDelta(playerId, 1);
@@ -32,7 +32,7 @@ export const gameLobbyActions = {
       setPlayerScoreDelta(playerId, -1);
     },
     resetAll() {
-      useGameLobby.setState(({ players }) => ({
+      useGameLobbyStore.setState(({ players }) => ({
         players: players.map((player) => ({
           ...player,
           score: 0,
@@ -42,7 +42,7 @@ export const gameLobbyActions = {
   },
   player: {
     add(playerInfo: MutablePlayerInfo) {
-      useGameLobby.setState(({ players }) => ({
+      useGameLobbyStore.setState(({ players }) => ({
         players: [
           { ...playerInfo, id: crypto.randomUUID(), score: 0 },
           ...players,
@@ -50,12 +50,12 @@ export const gameLobbyActions = {
       }));
     },
     delete(id: PlayerInfo["id"]) {
-      useGameLobby.setState(({ players }) => ({
+      useGameLobbyStore.setState(({ players }) => ({
         players: players.filter((player) => player.id !== id),
       }));
     },
     edit(playerId: PlayerInfo["id"], updatedInfo: Partial<MutablePlayerInfo>) {
-      useGameLobby.setState(({ players }) => ({
+      useGameLobbyStore.setState(({ players }) => ({
         players: players.map((player) =>
           playerId === player.id ? { ...player, ...updatedInfo } : player
         ),

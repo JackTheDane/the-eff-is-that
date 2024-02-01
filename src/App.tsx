@@ -1,16 +1,21 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Game } from "./pages/Game";
-import { Intro } from "./pages/Intro";
+import { Home } from "./pages/Home";
 import { LobbyPage } from "./pages/LobbyPage";
 import { Winner } from "./pages/Winner";
 import { ROUTES } from "./routes";
 import { EditQuizPage } from "./pages/EditQuizPage";
+import { QuizzesPage } from "./pages/QuizzesPage";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: ROUTES.home,
-      element: <Intro />,
+      element: <Home />,
+    },
+    {
+      path: ROUTES.quiz.overview,
+      element: <QuizzesPage />,
     },
     {
       path: ROUTES.quiz.edit.pattern,

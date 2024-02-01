@@ -1,8 +1,11 @@
 import { Button } from "../../../components/Button";
-import { gameLobbyActions, useGameLobby } from "../hooks/useGameLobby";
+import {
+  gameLobbyStoreActions,
+  useGameLobbyStore,
+} from "../hooks/useGameLobbyStore";
 
 export const ResetAllScoresButton = () => {
-  const { players } = useGameLobby();
+  const { players } = useGameLobbyStore();
   const playerHasScore = players.some(({ score }) => score > 0);
 
   if (!playerHasScore) {
@@ -15,7 +18,7 @@ export const ResetAllScoresButton = () => {
         variant="danger"
         onClick={() => {
           if (window.confirm("Reset all scores?")) {
-            gameLobbyActions.score.resetAll();
+            gameLobbyStoreActions.score.resetAll();
           }
         }}
       >

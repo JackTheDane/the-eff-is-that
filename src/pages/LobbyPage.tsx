@@ -4,16 +4,16 @@ import { PlayerForm } from "../features/player/components/PlayerForm";
 import styles from "./LobbyPage.module.scss";
 import { PlayerCardContainer } from "../features/player/components/PlayerCardContainer";
 import {
-  gameLobbyActions,
-  useGameLobby,
-} from "../features/gameLobby/hooks/useGameLobby";
+  gameLobbyStoreActions,
+  useGameLobbyStore,
+} from "../features/gameLobby/hooks/useGameLobbyStore";
 import { PlayerCard } from "../features/player/components/PlayerCard";
 import { ROUTES } from "../routes";
 import { ResetAllScoresButton } from "../features/gameLobby/components/ResetAllScoresButton";
 
 export const LobbyPage = () => {
   const navigate = useNavigate();
-  const { players } = useGameLobby();
+  const { players } = useGameLobbyStore();
 
   const quizId = "123";
 
@@ -34,7 +34,7 @@ export const LobbyPage = () => {
           submitButtonProps={{ children: "+ Add" }}
           resetOnSubmit
           onSubmit={(newPlayerInfo) =>
-            gameLobbyActions.player.add({ ...newPlayerInfo })
+            gameLobbyStoreActions.player.add({ ...newPlayerInfo })
           }
         />
       </div>

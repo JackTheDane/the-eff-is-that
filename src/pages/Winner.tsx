@@ -1,7 +1,7 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Avatar } from "../features/avatar/components/Avatar";
-import { useGameLobby } from "../features/gameLobby/hooks/useGameLobby";
+import { useGameLobbyStore } from "../features/gameLobby/hooks/useGameLobbyStore";
 import { PlayerCard } from "../features/player/components/PlayerCard";
 import styles from "./Winner.module.scss";
 import { PlayerInfo } from "../features/player/models/PlayerInfo";
@@ -10,7 +10,7 @@ import { ROUTES } from "../routes";
 export const Winner = () => {
   const navigate = useNavigate();
 
-  const { players } = useGameLobby();
+  const { players } = useGameLobbyStore();
   const [winners, ...runnerUps] = [...players]
     .sort((playerA, playerB) => playerB.score - playerA.score)
     .reduce((map, player) => {

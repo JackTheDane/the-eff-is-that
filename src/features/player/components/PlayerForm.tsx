@@ -4,7 +4,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { FormTextInput } from "../../../components/inputs/form/FormTextInput";
 import { PlayerInfo } from "../models/PlayerInfo";
-import { gameLobbyActions } from "../../gameLobby/hooks/useGameLobby";
+import { gameLobbyStoreActions } from "../../gameLobby/hooks/useGameLobbyStore";
 import { Avatar } from "../../avatar/components/Avatar";
 import styles from "./PlayerForm.module.scss";
 import { Button, ButtonProps } from "../../../components/Button";

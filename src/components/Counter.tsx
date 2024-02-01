@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { gameLobbyActions } from "../features/gameLobby/hooks/useGameLobby";
+import { gameLobbyStoreActions } from "../features/gameLobby/hooks/useGameLobbyStore";
 import { Button } from "./Button";
 import styles from "./Counter.module.scss";
 

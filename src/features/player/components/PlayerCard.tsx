@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { Counter } from "../../../components/Counter";
 import {
-  useGameLobby,
-  gameLobbyActions,
-} from "../../gameLobby/hooks/useGameLobby";
+  useGameLobbyStore,
+  gameLobbyStoreActions,
+} from "../../gameLobby/hooks/useGameLobbyStore";
 import { PlayerInfo } from "../models/PlayerInfo";
 import { Avatar } from "../../avatar/components/Avatar";
 import styles from "./PlayerCard.module.scss";
@@ -20,7 +20,7 @@ export const PlayerCard: FC<PlayerCardProps> = ({
   status: initialStatus = "display",
 }) => {
   const { id, name, score, avatarSeed } = playerInfo;
-  const { players } = useGameLobby();
+  const { players } = useGameLobbyStore();
   const [status, setStatus] = useState(initialStatus);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const PlayerCard: FC<PlayerCardProps> = ({
 
   const onDeletePlayerClicked = () => {
     if (window.confirm(`Delete player ${playerInfo.name}?`)) {
-      gameLobbyActions.player.delete(playerInfo.id);
+      gameLobbyStoreActions.player.delete(playerInfo.id);
     }
   };
 
@@ -46,7 +46,7 @@ export const PlayerCard: FC<PlayerCardProps> = ({
           playerInfo={playerInfo}
           onSubmit={(newPlayerInfo) => {
             console.log(newPlayerInfo);
-            gameLobbyActions.player.edit(id, { ...newPlayerInfo });
+            gameLobbyStoreActions.player.edit(id, { ...newPlayerInfo });
             setStatus(initialStatus);
           }}
           submitButtonProps={{ children: "💾 Save" }}
@@ -93,8 +93,8 @@ export const PlayerCard: FC<PlayerCardProps> = ({
         {status === "playing" && (
           <Counter
             count={score}
-            onDecrement={() => gameLobbyActions.score.decrement(id)}
-            onIncrement={() => gameLobbyActions.score.increment(id)}
+            onDecrement={() => gameLobbyStoreActions.score.decrement(id)}
+            onIncrement={() => gameLobbyStoreActions.score.increment(id)}
           />
         )}
       </>

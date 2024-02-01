@@ -4,10 +4,7 @@ export const ROUTES = {
   home: "/",
   lobby: "/lobby",
   quiz: {
-    pattern: "/quiz/:quizId",
-    route(quizId: string) {
-      return generatePath(this.pattern, { quizId });
-    },
+    overview: "/quiz",
     edit: {
       pattern: "/quiz/:quizId/edit",
       route(quizId: string) {

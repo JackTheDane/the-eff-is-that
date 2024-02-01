@@ -1,22 +1,16 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Button } from "../../../components/Button";
 import { useKeyboardEvent } from "../../../hooks/useKeyboardEvent";
 import styles from "./PictureZoomer.module.scss";
 import { ZOOM_INCREMENTS, useZoomLevel } from "../hooks/useZoomLevel";
+import { Slide } from "../../slides/types";
 
 export type PictureZoomerProps = {
-  name: string;
-  src: string;
-  transformCenter?: {
-    x: number;
-    y: number;
-  };
+  slide: Slide;
 };
 
 export const PictureZoomer: FC<PictureZoomerProps> = ({
-  name,
-  src,
-  transformCenter,
+  slide: { answer, imageSrc, centerOrigin },
 }) => {
   const { zoomIn, zoomOut, zoomScale } = useZoomLevel();
 
@@ -33,7 +27,7 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
   });
 
   const title =
-    zoomScale === ZOOM_INCREMENTS[0] ? name : "What the f*ck is that?!";
+    zoomScale === ZOOM_INCREMENTS[0] ? answer : "What the f*ck is that?!";
 
   return (
     <div className={styles.root}>
@@ -41,11 +35,11 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
       <div className={styles.pictureContainerWrapper}>
         <div className={styles.pictureContainer}>
           <img
-            src={src}
+            src={imageSrc}
             style={{
               transform: `scale(${zoomScale})`,
-              transformOrigin: `${transformCenter?.x ?? 50}% ${
-                transformCenter?.y ?? 50
+              transformOrigin: `${centerOrigin?.x ?? 50}% ${
+                centerOrigin?.y ?? 50
               }%`,
             }}
           />

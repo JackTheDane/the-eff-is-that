@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
-import styles from "./Intro.module.scss";
+import styles from "./Home.module.scss";
 import soundClip from "../assets/what-is-that.mp3";
 import { useRef } from "react";
 import { ROUTES } from "../routes";
 
-export const Intro = () => {
+export const Home = () => {
   const navigate = useNavigate();
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -24,9 +24,14 @@ export const Intro = () => {
       >
         🔊
       </Button>
-      <Button variant="success" onClick={() => navigate(ROUTES.lobby)}>
-        Create lobby
-      </Button>
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <Button variant="success" onClick={() => navigate(ROUTES.lobby)}>
+          Create lobby
+        </Button>
+        <Button onClick={() => navigate(ROUTES.quiz.overview)}>
+          View quizzes
+        </Button>
+      </div>
     </div>
   );
 };

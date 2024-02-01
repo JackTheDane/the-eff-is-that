@@ -1,0 +1,13 @@
+.quizGridItem {
+  display: flex;
+  min-width: 200px;
+  max-width: 400px;
+  flex-grow: 1;
+  padding: 8px;
+  border-radius: 3px;
+  transition: background-color 0.1s;
+
+  &:hover {
+    background-color: rgba($color: #fff, $alpha: 0.15);
+  }
+}
