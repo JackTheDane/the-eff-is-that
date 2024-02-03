@@ -7,10 +7,12 @@ import { Slide } from "../../slides/types";
 
 export type PictureZoomerProps = {
   slide: Slide;
+  showTitle?: boolean;
 };
 
 export const PictureZoomer: FC<PictureZoomerProps> = ({
   slide: { answer, imageSrc, centerOrigin },
+  showTitle = true,
 }) => {
   const { zoomIn, zoomOut, zoomScale } = useZoomLevel();
 
@@ -26,12 +28,15 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
     }
   });
 
-  const title =
-    zoomScale === ZOOM_INCREMENTS[0] ? answer : "What the f*ck is that?!";
-
   return (
     <div className={styles.root}>
-      <h2>{title}</h2>
+      {showTitle && (
+        <h2>
+          {zoomScale === ZOOM_INCREMENTS[0]
+            ? answer
+            : "What the f*ck is that?!"}
+        </h2>
+      )}
       <div className={styles.pictureContainerWrapper}>
         <div className={styles.pictureContainer}>
           <img

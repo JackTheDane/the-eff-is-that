@@ -10,6 +10,7 @@ import {
 import { PlayerCard } from "../features/player/components/PlayerCard";
 import { ROUTES } from "../routes";
 import { ResetAllScoresButton } from "../features/gameLobby/components/ResetAllScoresButton";
+import { Header } from "../components/Header";
 
 export const LobbyPage = () => {
   const navigate = useNavigate();
@@ -18,8 +19,8 @@ export const LobbyPage = () => {
   const quizId = "123";
 
   return (
-    <div className={styles.lobby}>
-      <div className={styles.header}>
+    <>
+      <Header>
         <Button onClick={() => navigate(ROUTES.home)}>👈 Back</Button>
         <Button
           variant="success"
@@ -28,7 +29,8 @@ export const LobbyPage = () => {
         >
           Start game 🚀
         </Button>
-      </div>
+      </Header>
+
       <div className={styles.formWrapper}>
         <PlayerForm
           submitButtonProps={{ children: "+ Add" }}
@@ -46,6 +48,6 @@ export const LobbyPage = () => {
           <PlayerCard playerInfo={player} status="display" key={player.id} />
         ))}
       </PlayerCardContainer>
-    </div>
+    </>
   );
 };

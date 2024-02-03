@@ -10,13 +10,13 @@ export function Game() {
   const { quizzes } = useQuizzesStore();
 
   return (
-    <div className={styles.app}>
+    <>
       <PictureZoomerSlideShow slides={quizzes[0].slides} />
       <PlayerCardContainer>
         {players.map((player) => (
           <PlayerCard playerInfo={player} status="playing" key={player.id} />
         ))}
       </PlayerCardContainer>
-    </div>
+    </>
   );
 }

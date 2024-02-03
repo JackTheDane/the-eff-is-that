@@ -1,10 +1,10 @@
 import { Controller, Control, FieldValues, FieldPath } from "react-hook-form";
-import { TextInput, TextInputProps } from "../TextInput";
+import { NumberInput, NumberInputProps } from "../NumberInput";
 
 type FormTextInputProps<T extends FieldValues> = {
   name: FieldPath<T>;
   control: Control<T, any>;
-} & Omit<TextInputProps, "onChange" | "value" | "ref">;
+} & Omit<NumberInputProps, "onChange" | "value" | "ref">;
 
 export const FormTextInput = <T extends FieldValues>({
   name,
@@ -15,7 +15,9 @@ export const FormTextInput = <T extends FieldValues>({
     <Controller
       name={name}
       control={control}
-      render={({ field: { ...field } }) => <TextInput {...field} {...props} />}
+      render={({ field: { ...field } }) => (
+        <NumberInput {...field} {...props} />
+      )}
     />
   );
 };

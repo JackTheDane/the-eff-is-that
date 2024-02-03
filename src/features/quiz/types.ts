@@ -1,7 +1,4 @@
-import type { Slide } from "../slides/types";
+import { z } from "zod";
+import { quizSchema } from "./schemas";
 
-export type Quiz = {
-  id: string;
-  name: string;
-  slides: Slide[];
-};
+export type Quiz = z.infer<typeof quizSchema>;

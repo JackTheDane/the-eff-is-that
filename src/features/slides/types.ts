@@ -1,9 +1,4 @@
-export type Slide = {
-  id: string;
-  answer: string;
-  imageSrc: string;
-  centerOrigin: {
-    x: number;
-    y: number;
-  };
-};
+import { z } from "zod";
+import { slideSchema } from "./schemas";
+
+export type Slide = z.infer<typeof slideSchema>;

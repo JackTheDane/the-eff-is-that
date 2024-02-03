@@ -10,7 +10,7 @@ export const Home = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   return (
-    <div className={styles.root}>
+    <div className={styles.home}>
       <audio ref={audioRef}>
         <source src={soundClip} />
       </audio>

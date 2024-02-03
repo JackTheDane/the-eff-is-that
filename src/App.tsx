@@ -6,32 +6,38 @@ import { Winner } from "./pages/Winner";
 import { ROUTES } from "./routes";
 import { EditQuizPage } from "./pages/EditQuizPage";
 import { QuizzesPage } from "./pages/QuizzesPage";
+import { RootLayout } from "./layouts/RootLayout";
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: ROUTES.home,
-      element: <Home />,
-    },
-    {
-      path: ROUTES.quiz.overview,
-      element: <QuizzesPage />,
-    },
-    {
-      path: ROUTES.quiz.edit.pattern,
-      element: <EditQuizPage />,
-    },
-    {
-      path: ROUTES.lobby,
-      element: <LobbyPage />,
-    },
-    {
-      path: ROUTES.quiz.play.pattern,
-      element: <Game />,
-    },
-    {
-      path: ROUTES.quiz.winner.pattern,
-      element: <Winner />,
+      element: <RootLayout />,
+      children: [
+        {
+          path: ROUTES.home,
+          element: <Home />,
+        },
+        {
+          path: ROUTES.quiz.overview,
+          element: <QuizzesPage />,
+        },
+        {
+          path: ROUTES.quiz.edit.pattern,
+          element: <EditQuizPage />,
+        },
+        {
+          path: ROUTES.lobby,
+          element: <LobbyPage />,
+        },
+        {
+          path: ROUTES.quiz.play.pattern,
+          element: <Game />,
+        },
+        {
+          path: ROUTES.quiz.winner.pattern,
+          element: <Winner />,
+        },
+      ],
     },
   ]);
 
