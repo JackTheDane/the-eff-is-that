@@ -129,7 +129,7 @@ export const useQuizzesStore = create<QuizzesStore>((set) => ({
   ],
 }));
 
-const quizzesStoreActions = {
+export const quizzesStoreActions = {
   quiz: {
     add(quizValues: Omit<Quiz, "id">) {
       useQuizzesStore.setState(({ quizzes }) => ({

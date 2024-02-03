@@ -9,6 +9,7 @@ import { Quiz } from "../features/quiz/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { quizSchema } from "../features/quiz/schemas";
+import { QuizForm } from "../features/quiz/components/QuizForm";
 
 export const EditQuizPage = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export const EditQuizPage = () => {
       return <>Quiz not found... 🤔</>;
     }
 
-    return;
+    return <QuizForm quiz={matchingQuiz} />;
   };
 
   return (

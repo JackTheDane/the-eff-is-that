@@ -9,8 +9,8 @@ export type NumberInputProps = Omit<
   >,
   "type" | "value" | "onChange"
 > & {
-  value?: string;
-  onChange(newValue: string): void;
+  value?: number;
+  onChange(newValue: number): void;
 };
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
@@ -21,8 +21,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         type="number"
         className={useCombinedClasses(className, styles.input)}
         value={value}
-        onChange={({ target }) => {
-          onChange(target.value);
+        onChange={(event) => {
+          // TODO: Fix this for PictureZoomer
+          event.preventDefault();
+          event.stopPropagation();
+          onChange(Number.parseFloat(event.target.value));
         }}
         {...props}
       />
