@@ -64,24 +64,45 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
         </div>
         <hr style={{ width: "100%" }} />
         <div className={styles.quizInputGroup}>
-          <FormTextInput
-            control={control}
-            name={`slides.${selectedSlideIndex}.answer`}
-            placeholder="Answer"
-            key={`slides.${selectedSlideIndex}.answer`}
-          />
-          <FormNumberInput
-            control={control}
-            name={`slides.${selectedSlideIndex}.centerOrigin.x`}
-            placeholder="center X"
-            key={`slides.${selectedSlideIndex}.centerOrigin.x`}
-          />
-          <FormNumberInput
-            control={control}
-            name={`slides.${selectedSlideIndex}.centerOrigin.y`}
-            placeholder="center Y"
-            key={`slides.${selectedSlideIndex}.centerOrigin.y`}
-          />
+          {selectedSlideField && (
+            <>
+              <FormTextInput
+                control={control}
+                name={`slides.${selectedSlideIndex}.answer`}
+                placeholder="Answer"
+                key={`${selectedSlideField.id}-answer`}
+              />
+              <FormNumberInput
+                control={control}
+                name={`slides.${selectedSlideIndex}.centerOrigin.x`}
+                placeholder="center X"
+                key={`${selectedSlideField.id}-centerOrigin-x`}
+              />
+              <FormNumberInput
+                control={control}
+                name={`slides.${selectedSlideIndex}.centerOrigin.y`}
+                placeholder="center Y"
+                key={`${selectedSlideField.id}-centerOrigin-y`}
+              />
+              <Button
+                title={`Delete slide "${selectedSlideField.answer}"`}
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      `Delete slide "${selectedSlideField.answer}"?`
+                    )
+                  ) {
+                    remove(selectedSlideIndex);
+                    if (selectedSlideIndex === slideFields.length - 1) {
+                      setSelectedSlideIndex(slideFields.length - 2);
+                    }
+                  }
+                }}
+              >
+                💀 Delete
+              </Button>
+            </>
+          )}
         </div>
       </form>
       <div className={styles.formPreviewWrapper}>
