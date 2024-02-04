@@ -1,0 +1,41 @@
+.slideCard {
+  all: unset;
+  padding: 4px;
+  border: 2px solid black;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 200px;
+  transition: background-color 0.2s;
+
+  &.selected {
+    border-color: white;
+    background-color: rgba($color: #fff, $alpha: 0.3);
+  }
+
+  &:where(button:not(.selected)) {
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba($color: #fff, $alpha: 0.2);
+    }
+  }
+}
+
+.title {
+  margin: 0;
+  text-align: left;
+}
+
+.slidePreview {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

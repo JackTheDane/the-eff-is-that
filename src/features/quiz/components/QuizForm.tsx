@@ -9,6 +9,8 @@ import { Button } from "../../../components/Button";
 import { FormTextInput } from "../../../components/inputs/form/FormTextInput";
 import { FormNumberInput } from "../../../components/inputs/form/FormNumberInput";
 import { quizzesStoreActions } from "../hooks/useQuizzesStore";
+import styles from "./QuizForm.module.scss";
+import { SlideCard } from "../../slides/components/SlideCard";
 
 export type QuizFormProps = {
   quiz: Quiz;
@@ -37,7 +39,7 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
   }).at(selectedSlideIndex);
 
   return (
-    <div>
+    <div className={styles.quizFormRoot}>
       <form
         onSubmit={handleSubmit(
           (data) => quizzesStoreActions.quiz.edit(quiz.id, data),
@@ -47,8 +49,9 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
             window.alert("Save failed, check console");
           }
         )}
+        className={styles.quizForm}
       >
-        <div>
+        <div className={styles.quizInputGroup}>
           <FormTextInput
             control={control}
             name="name"
@@ -59,7 +62,8 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
             ❌ Cancel
           </Button>
         </div>
-        <div>
+        <hr style={{ width: "100%" }} />
+        <div className={styles.quizInputGroup}>
           <FormTextInput
             control={control}
             name={`slides.${selectedSlideIndex}.answer`}
@@ -80,26 +84,26 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
           />
         </div>
       </form>
-      <div>
-        {selectedSlideField ? (
-          <PictureZoomer
-            slide={selectedSlideField}
-            showTitle={false}
-            key={selectedSlideField.id}
-          />
-        ) : (
-          "Please select a slide on the right"
-        )}
-        <div>
+      <div className={styles.formPreviewWrapper}>
+        <div className={styles.pictureZoomerWrapper}>
+          {selectedSlideField ? (
+            <PictureZoomer
+              slide={selectedSlideField}
+              showTitle={false}
+              key={selectedSlideField.id}
+            />
+          ) : (
+            "Please select a slide on the right"
+          )}
+        </div>
+        <div className={styles.slideCards}>
           {slideFields.map((slideField, index) => (
-            <button
-              style={{ all: "unset" }}
-              onClick={() => setSelectedSlideIndex(index)}
+            <SlideCard
+              slide={slideField}
               key={slideField.id}
-            >
-              {slideField.answer}
-              {index === selectedSlideIndex && "Selected!"}
-            </button>
+              selected={index === selectedSlideIndex}
+              onClick={() => setSelectedSlideIndex(index)}
+            />
           ))}
         </div>
       </div>
