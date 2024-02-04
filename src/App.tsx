@@ -8,6 +8,9 @@ import { EditQuizPage } from "./pages/EditQuizPage";
 import { QuizzesPage } from "./pages/QuizzesPage";
 import { RootLayout } from "./layouts/RootLayout";
 import { LobbyQuizOverview } from "./pages/LobbyQuizOverview";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   const router = createBrowserRouter([
@@ -46,7 +49,11 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;

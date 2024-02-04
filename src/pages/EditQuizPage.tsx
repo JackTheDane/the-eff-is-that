@@ -3,21 +3,24 @@ import { Button } from "../components/Button";
 import { Header } from "../components/Header";
 import { ROUTES } from "../routes";
 import styles from "./EditQuizPage.module.scss";
-import { useQuizzesStore } from "../features/quiz/hooks/useQuizzesStore";
 import { QuizForm } from "../features/quiz/components/QuizForm";
+import { useQuiz } from "../features/quiz/hooks/useQuiz";
 
 export const EditQuizPage = () => {
   const navigate = useNavigate();
   const { quizId } = useParams();
-  const { quizzes } = useQuizzesStore();
-  const matchingQuiz = quizzes.find(({ id }) => id === quizId);
+  const { data: quiz, error, isPending } = useQuiz(quizId!);
 
   const renderContent = () => {
-    if (!matchingQuiz) {
-      return <>Quiz not found... 🤔</>;
+    if (isPending) {
+      return <>Loading...</>;
     }
 
-    return <QuizForm quiz={matchingQuiz} />;
+    if (error) {
+      return <>Quiz fetch failed...</>;
+    }
+
+    return <QuizForm quiz={quiz} />;
   };
 
   return (

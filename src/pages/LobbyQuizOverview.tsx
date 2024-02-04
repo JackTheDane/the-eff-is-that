@@ -4,13 +4,13 @@ import { Header } from "../components/Header";
 import { ROUTES } from "../routes";
 import styles from "./LobbyQuizOverview.module.scss";
 import { QuizzesGridItem } from "../features/quiz/components/QuizzesGridItem";
-import { useQuizzesStore } from "../features/quiz/hooks/useQuizzesStore";
 import { SELECTED_QUIZ_QUERY_PARAMETER_KEY } from "../features/quiz/constants";
+import { useQuizzes } from "../features/quiz/hooks/useQuizzes";
 
 export const LobbyQuizOverview = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { quizzes } = useQuizzesStore();
+  const { data: quizzes } = useQuizzes();
 
   const selectedQuizId = searchParams.get(SELECTED_QUIZ_QUERY_PARAMETER_KEY);
 
@@ -32,7 +32,7 @@ export const LobbyQuizOverview = () => {
 
       <div className={styles.quizzesWrapper}>
         {quizzes
-          .filter(({ slides }) => slides.length > 0)
+          ?.filter(({ slides }) => slides.length > 0)
           .map((quiz) => (
             <QuizzesGridItem
               quiz={quiz}

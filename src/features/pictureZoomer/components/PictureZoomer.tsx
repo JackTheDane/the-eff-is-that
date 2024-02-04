@@ -32,9 +32,7 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
     <div className={styles.root}>
       {showTitle && (
         <h2>
-          {zoomScale === ZOOM_INCREMENTS[0]
-            ? answer
-            : "What the f*ck is that?!"}
+          {zoomScale === ZOOM_INCREMENTS[0] ? answer : "What the 🦆 is that?!"}
         </h2>
       )}
       <div className={styles.pictureContainerWrapper}>

@@ -3,20 +3,22 @@ import { useGameLobbyStore } from "../features/gameLobby/hooks/useGameLobbyStore
 import { PlayerCard } from "../features/player/components/PlayerCard";
 import { PictureZoomerSlideShow } from "../features/slides/components/PictureZoomerSlideShow";
 import { PlayerCardContainer } from "../features/player/components/PlayerCardContainer";
-import { useQuizzesStore } from "../features/quiz/hooks/useQuizzesStore";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../components/Button";
 import { ROUTES } from "../routes";
+import { useQuiz } from "../features/quiz/hooks/useQuiz";
 
 export function Game() {
   const navigate = useNavigate();
   const { quizId } = useParams();
   const { players } = useGameLobbyStore();
-  const { quizzes } = useQuizzesStore();
+  const { data: quiz, error, isPending } = useQuiz(quizId!);
 
-  const matchingQuiz = quizzes.find(({ id }) => id === quizId);
+  if (isPending) {
+    return <>Loading...</>;
+  }
 
-  if (!matchingQuiz) {
+  if (error) {
     return (
       <>
         <p>Could not find a quiz matching this id... 🤔</p>
@@ -35,7 +37,7 @@ export function Game() {
 
   return (
     <>
-      <PictureZoomerSlideShow slides={matchingQuiz.slides} />
+      <PictureZoomerSlideShow slides={quiz.slides} />
       <PlayerCardContainer>
         {players.map((player) => (
           <PlayerCard playerInfo={player} status="playing" key={player.id} />
