@@ -1,0 +1,1 @@
+export const SELECTED_QUIZ_QUERY_PARAMETER_KEY = "quiz";

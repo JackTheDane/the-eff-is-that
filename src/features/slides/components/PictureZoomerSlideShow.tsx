@@ -67,7 +67,7 @@ export const PictureZoomerSlideShow: FC<PictureZoomerSlideShowProps> = ({
         </Button>
       ) : (
         <Button
-          onClick={() => navigate(ROUTES.lobby)}
+          onClick={() => navigate(ROUTES.lobby.quizzes.route(quizId))}
           size="large"
           className={styles.slideIndexButton}
         >

@@ -61,7 +61,7 @@ export const Winner = () => {
       ))}
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {runnerUps.flat().flatMap((player) => (
-          <PlayerCard playerInfo={player} key={player.id} />
+          <PlayerCard playerInfo={player} hideControls key={player.id} />
         ))}
       </div>
       <div
@@ -75,7 +75,7 @@ export const Winner = () => {
         <Button
           size="large"
           variant="success"
-          onClick={() => navigate(ROUTES.lobby)}
+          onClick={() => navigate(ROUTES.lobby.players)}
         >
           🔁 Play again?
         </Button>

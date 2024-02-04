@@ -17,6 +17,19 @@
   &:hover {
     background-color: rgba($color: #fff, $alpha: 0.15);
   }
+
+  &.selected {
+    border-color: white;
+    background-color: rgba($color: #fff, $alpha: 0.3);
+  }
+
+  &:where(button:not(.selected)) {
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba($color: #fff, $alpha: 0.2);
+    }
+  }
 }
 
 .quizSlidePreviewsContainer {

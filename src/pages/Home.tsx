@@ -28,7 +28,7 @@ export const Home = () => {
         <Button
           variant="success"
           size="large"
-          onClick={() => navigate(ROUTES.lobby)}
+          onClick={() => navigate(ROUTES.lobby.players)}
         >
           Create lobby
         </Button>

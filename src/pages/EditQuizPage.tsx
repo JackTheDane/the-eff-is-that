@@ -4,11 +4,6 @@ import { Header } from "../components/Header";
 import { ROUTES } from "../routes";
 import styles from "./EditQuizPage.module.scss";
 import { useQuizzesStore } from "../features/quiz/hooks/useQuizzesStore";
-import { PictureZoomer } from "../features/pictureZoomer/components/PictureZoomer";
-import { Quiz } from "../features/quiz/types";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { quizSchema } from "../features/quiz/schemas";
 import { QuizForm } from "../features/quiz/components/QuizForm";
 
 export const EditQuizPage = () => {

@@ -16,18 +16,16 @@ export const LobbyPage = () => {
   const navigate = useNavigate();
   const { players } = useGameLobbyStore();
 
-  const quizId = "123";
-
   return (
     <>
       <Header>
         <Button onClick={() => navigate(ROUTES.home)}>👈 Back</Button>
         <Button
           variant="success"
-          onClick={() => navigate(ROUTES.quiz.play.route(quizId, 0))}
+          onClick={() => navigate(ROUTES.lobby.quizzes.route())}
           disabled={players.length === 0}
         >
-          Start game 🚀
+          Select a quiz 👉
         </Button>
       </Header>
 

@@ -13,11 +13,13 @@ import { Button } from "../../../components/Button";
 export type PlayerCardProps = {
   playerInfo: PlayerInfo;
   status?: "playing" | "editing" | "display";
+  hideControls?: boolean;
 };
 
 export const PlayerCard: FC<PlayerCardProps> = ({
   playerInfo,
   status: initialStatus = "display",
+  hideControls = false,
 }) => {
   const { id, name, score, avatarSeed } = playerInfo;
   const { players } = useGameLobbyStore();
@@ -76,7 +78,7 @@ export const PlayerCard: FC<PlayerCardProps> = ({
           )}
         </div>
 
-        {status === "display" && (
+        {status === "display" && !hideControls && (
           <div
             style={{
               display: "flex",

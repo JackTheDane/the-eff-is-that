@@ -1,13 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Header } from "../components/Header";
-import { QuizzesGrid } from "../features/quiz/components/QuizzesGrid";
 import { ROUTES } from "../routes";
 import styles from "./QuizzesPage.module.scss";
-import { quizzesStoreActions } from "../features/quiz/hooks/useQuizzesStore";
+import {
+  quizzesStoreActions,
+  useQuizzesStore,
+} from "../features/quiz/hooks/useQuizzesStore";
+import { QuizzesGridItem } from "../features/quiz/components/QuizzesGridItem";
 
 export const QuizzesPage = () => {
   const navigate = useNavigate();
+  const { quizzes } = useQuizzesStore();
 
   return (
     <>
@@ -19,7 +23,12 @@ export const QuizzesPage = () => {
             const quizName = window.prompt("Quiz name?");
 
             if (quizName) {
-              quizzesStoreActions.quiz.add({ name: quizName, slides: [] });
+              const newQuiz = quizzesStoreActions.quiz.add({
+                name: quizName,
+                slides: [],
+              });
+
+              navigate(ROUTES.quiz.edit.route(newQuiz.id));
             }
           }}
         >
@@ -27,7 +36,13 @@ export const QuizzesPage = () => {
         </Button>
       </Header>
       <div className={styles.quizzesWrapper}>
-        <QuizzesGrid />
+        {quizzes.map((quiz) => (
+          <QuizzesGridItem
+            quiz={quiz}
+            href={ROUTES.quiz.edit.route(quiz.id)}
+            key={quiz.id}
+          />
+        ))}
       </div>
     </>
   );

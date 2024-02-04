@@ -7,6 +7,7 @@ import { ROUTES } from "./routes";
 import { EditQuizPage } from "./pages/EditQuizPage";
 import { QuizzesPage } from "./pages/QuizzesPage";
 import { RootLayout } from "./layouts/RootLayout";
+import { LobbyQuizOverview } from "./pages/LobbyQuizOverview";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,8 +27,12 @@ function App() {
           element: <EditQuizPage />,
         },
         {
-          path: ROUTES.lobby,
+          path: ROUTES.lobby.players,
           element: <LobbyPage />,
+        },
+        {
+          path: ROUTES.lobby.quizzes.pattern,
+          element: <LobbyQuizOverview />,
         },
         {
           path: ROUTES.quiz.play.pattern,
