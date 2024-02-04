@@ -8,18 +8,26 @@ import { quizSchema } from "../schemas";
 import { Button } from "../../../components/Button";
 import { FormTextInput } from "../../../components/inputs/form/FormTextInput";
 import { FormNumberInput } from "../../../components/inputs/form/FormNumberInput";
-import { quizzesStoreActions } from "../hooks/useQuizzesStore";
 import styles from "./QuizForm.module.scss";
 import { SlideCard } from "../../slides/components/SlideCard";
 import { FileUploadButton } from "../../files/components/FileUploadButton";
 import { base64EncodeFile } from "../../files/utils/base64EncodeFile";
 import { generateEmptySlide } from "../../slides/utils/generateEmptySlide";
+import { useSetQuiz } from "../hooks/useSetQuiz";
+import { useDeleteQuiz } from "../hooks/useDeleteQuiz";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../routes";
 
 export type QuizFormProps = {
   quiz: Quiz;
 } & Omit<ComponentPropsWithoutRef<"form">, "onSubmit">;
 
 export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
+  const navigate = useNavigate();
+
+  const { mutateAsync: updateQuiz, isPending } = useSetQuiz();
+  const { mutateAsync: deleteQuiz, isPending: isDeleting } = useDeleteQuiz();
+
   const [selectedSlideIndex, setSelectedSlideIndex] = useState(0);
 
   const {
@@ -47,13 +55,14 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
 
   const selectedSlideField = slideFields.at(selectedSlideIndex);
 
+  const isFormActionsDisabled = !isDirty || isPending;
+
   return (
     <div className={styles.quizFormRoot}>
       <form
         onSubmit={handleSubmit(
           (data) => {
-            const updatedQuiz = quizzesStoreActions.quiz.edit(quiz.id, data);
-            reset(updatedQuiz);
+            updateQuiz(data).then((updatedQuiz) => reset(updatedQuiz));
           },
           (fieldErrors) => {
             console.log("Error...");
@@ -69,11 +78,37 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
             name="name"
             placeholder="Quiz name"
           />
-          <Button type="submit" disabled={!isDirty}>
+          <Button type="submit" disabled={isFormActionsDisabled}>
             💾 Save
           </Button>
-          <Button type="button" onClick={() => reset()} disabled={!isDirty}>
+          <Button
+            type="button"
+            onClick={() => reset()}
+            disabled={isFormActionsDisabled}
+          >
             ❌ Cancel
+          </Button>
+          <Button
+            type="button"
+            onClick={() => {
+              if (
+                window.confirm(
+                  `Are you sure you want to delete quiz "${quiz.name}"?`
+                )
+              ) {
+                deleteQuiz(quiz.id)
+                  .then(() => {
+                    navigate(ROUTES.quiz.overview, { replace: true });
+                  })
+                  .catch((error) => {
+                    window.alert("Failed to delete quiz, check console");
+                    console.log(error);
+                  });
+              }
+            }}
+            disabled={isPending || isDeleting}
+          >
+            💀 Delete quiz
           </Button>
         </div>
         <hr style={{ width: "100%" }} />
