@@ -25,7 +25,11 @@ export const Home = () => {
         🔊
       </Button>
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        <Button variant="success" onClick={() => navigate(ROUTES.lobby)}>
+        <Button
+          variant="success"
+          size="large"
+          onClick={() => navigate(ROUTES.lobby)}
+        >
           Create lobby
         </Button>
         <Button onClick={() => navigate(ROUTES.quiz.overview)}>

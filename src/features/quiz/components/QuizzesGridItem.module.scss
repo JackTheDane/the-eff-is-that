@@ -1,13 +1,51 @@
 .quizGridItem {
+  all: unset;
+
   display: flex;
+  flex-direction: column;
   min-width: 200px;
   max-width: 400px;
   flex-grow: 1;
   padding: 8px;
-  border-radius: 3px;
-  transition: background-color 0.1s;
+  gap: 8px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+
+  border: 2px solid black;
+  border-radius: 10px;
 
   &:hover {
     background-color: rgba($color: #fff, $alpha: 0.15);
   }
+}
+
+.quizSlidePreviewsContainer {
+  display: flex;
+  height: 60px;
+  width: 100%;
+  gap: 1px;
+
+  .quizSlidePreview {
+    flex-grow: 5;
+    height: 100%;
+    width: 20px;
+    overflow: hidden;
+
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+      filter: blur(10px);
+    }
+  }
+
+  .quizSlidePreview + .quizSlidePreview {
+    flex-grow: 1;
+  }
+}
+
+.quizName {
+  color: white;
+  margin: 0;
+  font-weight: bold;
 }

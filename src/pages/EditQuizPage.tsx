@@ -28,7 +28,7 @@ export const EditQuizPage = () => {
   return (
     <>
       <Header>
-        <Button onClick={() => navigate(ROUTES.home)}>👈 Back</Button>
+        <Button onClick={() => navigate(ROUTES.quiz.overview)}>👈 Back</Button>
       </Header>
       <div className={styles.content}>{renderContent()}</div>
     </>
