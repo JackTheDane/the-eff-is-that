@@ -11,6 +11,9 @@ import { FormNumberInput } from "../../../components/inputs/form/FormNumberInput
 import { quizzesStoreActions } from "../hooks/useQuizzesStore";
 import styles from "./QuizForm.module.scss";
 import { SlideCard } from "../../slides/components/SlideCard";
+import { FileUploadButton } from "../../files/components/FileUploadButton";
+import { base64EncodeFile } from "../../files/utils/base64EncodeFile";
+import { generateEmptySlide } from "../../slides/utils/generateEmptySlide";
 
 export type QuizFormProps = {
   quiz: Quiz;
@@ -19,30 +22,39 @@ export type QuizFormProps = {
 export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
   const [selectedSlideIndex, setSelectedSlideIndex] = useState(0);
 
-  const { control, handleSubmit, reset } = useForm<Quiz>({
+  const {
+    control,
+    formState: { isDirty },
+    handleSubmit,
+    reset,
+  } = useForm<Quiz>({
     resolver: zodResolver(quizSchema),
-    defaultValues: quiz,
+    defaultValues: {
+      ...quiz,
+      slides: quiz.slides.length > 0 ? quiz.slides : [generateEmptySlide()],
+    },
   });
 
-  const {
-    fields: slideFields,
-    remove,
-    append,
-  } = useFieldArray({
+  const { remove, append, update } = useFieldArray({
     control,
     name: "slides",
   });
 
-  const selectedSlideField = useWatch({
+  const slideFields = useWatch({
     control,
     name: `slides`,
-  }).at(selectedSlideIndex);
+  });
+
+  const selectedSlideField = slideFields.at(selectedSlideIndex);
 
   return (
     <div className={styles.quizFormRoot}>
       <form
         onSubmit={handleSubmit(
-          (data) => quizzesStoreActions.quiz.edit(quiz.id, data),
+          (data) => {
+            const updatedQuiz = quizzesStoreActions.quiz.edit(quiz.id, data);
+            reset(updatedQuiz);
+          },
           (fieldErrors) => {
             console.log("Error...");
             console.log(fieldErrors);
@@ -57,8 +69,10 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
             name="name"
             placeholder="Quiz name"
           />
-          <Button type="submit">💾 Save</Button>
-          <Button type="button" onClick={() => reset()}>
+          <Button type="submit" disabled={!isDirty}>
+            💾 Save
+          </Button>
+          <Button type="button" onClick={() => reset()} disabled={!isDirty}>
             ❌ Cancel
           </Button>
         </div>
@@ -72,18 +86,42 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
                 placeholder="Answer"
                 key={`${selectedSlideField.id}-answer`}
               />
-              <FormNumberInput
-                control={control}
-                name={`slides.${selectedSlideIndex}.centerOrigin.x`}
-                placeholder="center X"
-                key={`${selectedSlideField.id}-centerOrigin-x`}
-              />
-              <FormNumberInput
-                control={control}
-                name={`slides.${selectedSlideIndex}.centerOrigin.y`}
-                placeholder="center Y"
-                key={`${selectedSlideField.id}-centerOrigin-y`}
-              />
+              {selectedSlideField.imageSrc && (
+                <>
+                  <FormNumberInput
+                    control={control}
+                    name={`slides.${selectedSlideIndex}.centerOrigin.x`}
+                    placeholder="center X"
+                    key={`${selectedSlideField.id}-centerOrigin-x`}
+                  />
+                  <FormNumberInput
+                    control={control}
+                    name={`slides.${selectedSlideIndex}.centerOrigin.y`}
+                    placeholder="center Y"
+                    key={`${selectedSlideField.id}-centerOrigin-y`}
+                  />
+                </>
+              )}
+              <FileUploadButton
+                onChange={(imageFile) => {
+                  base64EncodeFile(imageFile)
+                    .then((imageBase64) => {
+                      update(selectedSlideIndex, {
+                        ...selectedSlideField,
+                        imageSrc: imageBase64,
+                      });
+                    })
+                    .catch(console.log);
+                }}
+                accept="accept='image/jpeg, image/png'"
+              >
+                📂
+                <span>
+                  {selectedSlideField.imageSrc
+                    ? "Replace image"
+                    : "Upload image"}
+                </span>
+              </FileUploadButton>
               <Button
                 title={`Delete slide "${selectedSlideField.answer}"`}
                 onClick={() => {
@@ -126,6 +164,16 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
               onClick={() => setSelectedSlideIndex(index)}
             />
           ))}
+          <hr style={{ width: "100%" }} />
+          <Button
+            variant="success"
+            onClick={() => {
+              append(generateEmptySlide());
+              setSelectedSlideIndex(slideFields.length);
+            }}
+          >
+            + Add new
+          </Button>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 600px;
+  width: 600px;
   height: 600px;
   overflow: hidden;
   border-radius: 10px;
@@ -26,7 +26,7 @@
     object-fit: contain;
     height: 100%;
     width: 100%;
-    transition: transform-origin 0.2s;
+    transition: transform-origin 0.2s, transform 0.3s linear;
   }
 }
 
@@ -41,4 +41,14 @@
   gap: 8px;
   justify-content: center;
   align-items: center;
+}
+
+.picturePlaceholder {
+  height: 100%;
+  width: 100%;
+  font-style: italic;
+  color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -22,13 +22,19 @@ export const SlideCard: FC<SlideCardProps> = ({
     ),
     children: (
       <>
-        <div className={styles.slidePreview} title={slide.answer}>
-          <img
-            src={slide.imageSrc}
-            alt={`Preview image for slide "${slide.answer}"`}
-          />
-        </div>
-        <p className={styles.title}>{slide.answer}</p>
+        {slide.imageSrc && (
+          <div className={styles.slidePreview} title={slide.answer}>
+            <img
+              src={slide.imageSrc}
+              alt={`Preview image for slide "${slide.answer}"`}
+            />
+          </div>
+        )}
+        {slide.answer ? (
+          <p className={styles.title}>{slide.answer}</p>
+        ) : (
+          <p className={styles.cardPlaceholderTitle}>(Empty slide)</p>
+        )}
       </>
     ),
   });

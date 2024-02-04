@@ -14,6 +14,7 @@ import appelsin from "../../../assets/appelsin.jpg";
 import dronning from "../../../assets/dronning.jpg";
 import santa from "../../../assets/santa.png";
 import silverOrnament from "../../../assets/silver_ornament.jpg";
+import { generateUniqueId } from "../../id/utils/generateUniqueId";
 
 type QuizzesStore = {
   quizzes: Quiz[];
@@ -133,8 +134,10 @@ export const quizzesStoreActions = {
   quiz: {
     add(quizValues: Omit<Quiz, "id">) {
       useQuizzesStore.setState(({ quizzes }) => ({
-        quizzes: [...quizzes, { ...quizValues, id: crypto.randomUUID() }],
+        quizzes: [...quizzes, { ...quizValues, id: generateUniqueId() }],
       }));
+
+      return useQuizzesStore.getState().quizzes.at(-1)!;
     },
 
     edit(quizId: Quiz["id"], updatedQuizValues: Partial<Omit<Quiz, "id">>) {
@@ -148,6 +151,10 @@ export const quizzesStoreActions = {
             : quiz
         ),
       }));
+
+      return useQuizzesStore
+        .getState()
+        .quizzes.find(({ id }) => id === quizId)!;
     },
 
     delete(quizId: Quiz["id"]) {
@@ -164,7 +171,7 @@ export const quizzesStoreActions = {
           quiz.id === quizId
             ? {
                 ...quiz,
-                slides: [...quiz.slides, { ...slide, id: crypto.randomUUID() }],
+                slides: [...quiz.slides, { ...slide, id: generateUniqueId() }],
               }
             : quiz
         ),

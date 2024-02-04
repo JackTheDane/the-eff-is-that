@@ -39,15 +39,19 @@ export const PictureZoomer: FC<PictureZoomerProps> = ({
       )}
       <div className={styles.pictureContainerWrapper}>
         <div className={styles.pictureContainer}>
-          <img
-            src={imageSrc}
-            style={{
-              transform: `scale(${zoomScale})`,
-              transformOrigin: `${centerOrigin?.x ?? 50}% ${
-                centerOrigin?.y ?? 50
-              }%`,
-            }}
-          />
+          {imageSrc ? (
+            <img
+              src={imageSrc}
+              style={{
+                transform: `scale(${zoomScale})`,
+                transformOrigin: `${centerOrigin?.x ?? 50}% ${
+                  centerOrigin?.y ?? 50
+                }%`,
+              }}
+            />
+          ) : (
+            <span className={styles.picturePlaceholder}>(No image)</span>
+          )}
         </div>
         <div className={styles.options}>
           <div className={styles.zoomOptions}>

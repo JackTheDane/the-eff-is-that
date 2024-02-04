@@ -1,3 +1,4 @@
+import { generateUniqueId } from "../../id/utils/generateUniqueId";
 import { PlayerInfo } from "../../player/models/PlayerInfo";
 import { create } from "zustand";
 
@@ -44,7 +45,7 @@ export const gameLobbyStoreActions = {
     add(playerInfo: MutablePlayerInfo) {
       useGameLobbyStore.setState(({ players }) => ({
         players: [
-          { ...playerInfo, id: crypto.randomUUID(), score: 0 },
+          { ...playerInfo, id: generateUniqueId(), score: 0 },
           ...players,
         ],
       }));
