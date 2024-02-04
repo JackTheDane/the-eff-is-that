@@ -17,6 +17,7 @@ import { useSetQuiz } from "../hooks/useSetQuiz";
 import { useDeleteQuiz } from "../hooks/useDeleteQuiz";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../routes";
+import { ExportQuizButton } from "./ExportQuizButton";
 
 export type QuizFormProps = {
   quiz: Quiz;
@@ -110,6 +111,7 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
           >
             💀 Delete quiz
           </Button>
+          <ExportQuizButton quiz={quiz} />
         </div>
         <hr style={{ width: "100%" }} />
         <div className={styles.quizInputGroup}>

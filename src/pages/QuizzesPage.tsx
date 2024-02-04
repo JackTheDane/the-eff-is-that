@@ -7,6 +7,7 @@ import { QuizzesGridItem } from "../features/quiz/components/QuizzesGridItem";
 import { useSetQuiz } from "../features/quiz/hooks/useSetQuiz";
 import { generateUniqueId } from "../features/id/utils/generateUniqueId";
 import { useQuizzes } from "../features/quiz/hooks/useQuizzes";
+import { ImportQuizButton } from "../features/quiz/components/ImportQuizButton";
 
 export const QuizzesPage = () => {
   const navigate = useNavigate();
@@ -20,24 +21,33 @@ export const QuizzesPage = () => {
     <>
       <Header>
         <Button onClick={() => navigate(ROUTES.home)}>👈 Back</Button>
-        <Button
-          variant="success"
-          onClick={() => {
-            const quizName = window.prompt("Quiz name?");
-
-            if (quizName) {
-              createQuiz({
-                id: generateUniqueId(),
-                name: quizName,
-                slides: [],
-              }).then((newQuiz) => {
-                navigate(ROUTES.quiz.edit.route(newQuiz.id));
-              });
-            }
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
           }}
         >
-          + Create new
-        </Button>
+          <ImportQuizButton />
+          <Button
+            variant="success"
+            onClick={() => {
+              const quizName = window.prompt("Quiz name?");
+
+              if (quizName) {
+                createQuiz({
+                  id: generateUniqueId(),
+                  name: quizName,
+                  slides: [],
+                }).then((newQuiz) => {
+                  navigate(ROUTES.quiz.edit.route(newQuiz.id));
+                });
+              }
+            }}
+          >
+            + Create new
+          </Button>
+        </div>
       </Header>
       <div className={styles.quizzesWrapper}>
         {quizzes?.map((quiz) => (

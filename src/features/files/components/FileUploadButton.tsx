@@ -1,16 +1,27 @@
 import { FC, InputHTMLAttributes, ReactNode, useRef } from "react";
-import { Button } from "../../../components/Button";
+import { Button, ButtonProps } from "../../../components/Button";
 
 export type FileUploadButtonProps = {
-  onChange(file: File): void;
-  accept?: InputHTMLAttributes<HTMLInputElement>["accept"];
   children?: ReactNode;
-};
+} & Omit<ButtonProps, "onChange"> &
+  Pick<InputHTMLAttributes<HTMLInputElement>, "accept"> &
+  (
+    | {
+        multiple: true;
+        onChange(files: File[]): void;
+      }
+    | {
+        multiple?: false;
+        onChange(file: File): void;
+      }
+  );
 
 export const FileUploadButton: FC<FileUploadButtonProps> = ({
   onChange,
   accept,
   children,
+  multiple,
+  ...buttonProps
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -22,16 +33,24 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
           fileInputRef.current?.click();
         }}
         type="button"
+        {...buttonProps}
       >
         {children}
       </Button>
       <input
         type="file"
         ref={fileInputRef}
+        multiple={multiple}
         onChange={(event) => {
-          const file = event.target.files?.[0];
-          if (file && onChange) {
-            onChange(file);
+          const files = event.target.files;
+          if (!files || !onChange) {
+            return;
+          }
+
+          if (multiple) {
+            onChange([...files]);
+          } else {
+            onChange(files[0]);
           }
         }}
         style={{ display: "none" }} // Hide the file input
