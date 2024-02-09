@@ -1,14 +1,12 @@
 import { generateUniqueId } from "../../id/utils/generateUniqueId";
 import { PlayerInfo } from "../../player/models/PlayerInfo";
 import { create } from "zustand";
-
-type GameLobbyStore = {
-  players: PlayerInfo[];
-};
+import { GameLobby } from "../types";
 
 type MutablePlayerInfo = Omit<PlayerInfo, "id" | "score">;
 
-export const useGameLobbyStore = create<GameLobbyStore>((set) => ({
+export const useGameLobbyStore = create<GameLobby>((set) => ({
+  id: generateUniqueId(),
   players: [],
 }));
 
