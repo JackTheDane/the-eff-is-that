@@ -150,7 +150,7 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
                     })
                     .catch(console.log);
                 }}
-                accept="accept='image/jpeg, image/png'"
+                accept="image/jpeg, image/png"
               >
                 📂
                 <span>
