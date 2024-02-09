@@ -1,6 +1,7 @@
 import { Quiz } from "../types";
 import { FileUploadButton } from "../../files/components/FileUploadButton";
 import { useSetQuiz } from "../hooks/useSetQuiz";
+import { QUIZ_FILE_EXTENSION } from "../constants";
 
 const convertQuizFileToJson = (quizFile: File) =>
   new Promise<Quiz>((resolve, reject) => {
@@ -31,7 +32,12 @@ export const ImportQuizButton = () => {
   };
 
   return (
-    <FileUploadButton multiple disabled={isPending} onChange={onFilesUploaded}>
+    <FileUploadButton
+      multiple
+      disabled={isPending}
+      onChange={onFilesUploaded}
+      accept={`.${QUIZ_FILE_EXTENSION}`}
+    >
       📤 Import quiz
     </FileUploadButton>
   );

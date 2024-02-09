@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Quiz } from "../types";
 import { Button } from "../../../components/Button";
+import { QUIZ_FILE_EXTENSION } from "../constants";
 
 export type ExportQuizButtonProps = {
   quiz: Quiz;
@@ -8,7 +9,7 @@ export type ExportQuizButtonProps = {
 
 function downloadObjectAsFile(
   obj: Record<string, any>,
-  fileName: string = "download.json"
+  fileName: string
 ): void {
   const serializedObject = JSON.stringify(obj);
   const blob = new Blob([serializedObject], { type: "application/json" });
@@ -23,7 +24,9 @@ function downloadObjectAsFile(
 }
 
 const generateFileName = (quiz: Quiz) =>
-  `${quiz.name}-${new Date().toISOString().split(".")[0]}`;
+  `${quiz.name}-${
+    new Date().toISOString().split(".")[0]
+  }.${QUIZ_FILE_EXTENSION}`;
 
 export const ExportQuizButton: FC<ExportQuizButtonProps> = ({ quiz }) => {
   return (

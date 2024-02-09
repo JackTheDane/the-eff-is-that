@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import styles from "./Home.module.scss";
-import soundClip from "../assets/what-is-that.mp3";
+import soundClip from "../assets/what-the-duck-is-that.mp3";
 import { useRef } from "react";
 import { ROUTES } from "../routes";
 
@@ -15,7 +15,7 @@ export const Home = () => {
         <source src={soundClip} />
       </audio>
 
-      <h1>What the EFF is that?!</h1>
+      <h1>What the 🦆 is that?!</h1>
       <Button
         size="large"
         onClick={() => {
