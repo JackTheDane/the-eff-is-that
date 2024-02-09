@@ -13,41 +13,44 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient();
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      element: <RootLayout />,
-      children: [
-        {
-          path: ROUTES.home,
-          element: <Home />,
-        },
-        {
-          path: ROUTES.quiz.overview,
-          element: <QuizzesPage />,
-        },
-        {
-          path: ROUTES.quiz.edit.pattern,
-          element: <EditQuizPage />,
-        },
-        {
-          path: ROUTES.lobby.players,
-          element: <LobbyPage />,
-        },
-        {
-          path: ROUTES.lobby.quizzes.pattern,
-          element: <LobbyQuizOverview />,
-        },
-        {
-          path: ROUTES.quiz.play.pattern,
-          element: <Game />,
-        },
-        {
-          path: ROUTES.quiz.winner.pattern,
-          element: <Winner />,
-        },
-      ],
-    },
-  ]);
+  const router = createBrowserRouter(
+    [
+      {
+        element: <RootLayout />,
+        children: [
+          {
+            path: ROUTES.home,
+            element: <Home />,
+          },
+          {
+            path: ROUTES.quiz.overview,
+            element: <QuizzesPage />,
+          },
+          {
+            path: ROUTES.quiz.edit.pattern,
+            element: <EditQuizPage />,
+          },
+          {
+            path: ROUTES.lobby.players,
+            element: <LobbyPage />,
+          },
+          {
+            path: ROUTES.lobby.quizzes.pattern,
+            element: <LobbyQuizOverview />,
+          },
+          {
+            path: ROUTES.quiz.play.pattern,
+            element: <Game />,
+          },
+          {
+            path: ROUTES.quiz.winner.pattern,
+            element: <Winner />,
+          },
+        ],
+      },
+    ],
+    { basename: import.meta.env.BASE_URL }
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
