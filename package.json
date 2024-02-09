@@ -1,11 +1,11 @@
 {
-  "name": "the-eff-is-that",
+  "name": "what-the-duck-is-that",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --base=/the-duck-is-that/",
+    "build": "tsc && vite build --base=/what-the-duck-is-that/",
     "preview": "vite preview"
   },
   "dependencies": {
