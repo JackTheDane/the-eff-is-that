@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { useCombinedClasses } from "../../hooks/useCombinedClasses";
+import { combineClasses } from "../../utils/combineClasses";
 import styles from "./TextInput.module.scss";
 
 export type NumberInputProps = Omit<
@@ -19,7 +19,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       <input
         ref={ref}
         type="number"
-        className={useCombinedClasses(className, styles.input)}
+        className={combineClasses(className, styles.input)}
         value={value}
         onChange={(event) => {
           // TODO: Fix this for PictureZoomer

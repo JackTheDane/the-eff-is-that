@@ -9,10 +9,13 @@ import { QuizzesPage } from "./pages/QuizzesPage";
 import { RootLayout } from "./layouts/RootLayout";
 import { LobbyQuizOverview } from "./pages/LobbyQuizOverview";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useNativeBeforeUnloadWarning } from "./hooks/useNativeBeforeUnloadWarning";
 
 const queryClient = new QueryClient();
 
 function App() {
+  useNativeBeforeUnloadWarning();
+
   const router = createHashRouter([
     {
       element: <RootLayout />,

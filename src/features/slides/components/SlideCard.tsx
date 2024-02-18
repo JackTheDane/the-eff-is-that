@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Slide } from "../types";
 import styles from "./SlideCard.module.scss";
-import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
+import { combineClasses } from "../../../utils/combineClasses";
 
 export type SlideCardProps = {
   slide: Slide;
@@ -16,10 +16,7 @@ export const SlideCard: FC<SlideCardProps> = ({
 }) => {
   return React.createElement(onClick ? "button" : "div", {
     onClick: onClick ? () => onClick(slide) : undefined,
-    className: useCombinedClasses(
-      styles.slideCard,
-      selected && styles.selected
-    ),
+    className: combineClasses(styles.slideCard, selected && styles.selected),
     children: (
       <>
         {slide.imageSrc && (

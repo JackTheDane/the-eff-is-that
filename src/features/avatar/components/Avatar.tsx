@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
+import { combineClasses } from "../../../utils/combineClasses";
 import { PlayerInfo } from "../../player/models/PlayerInfo";
 import styles from "./Avatar.module.scss";
 import { getAvatarImageUrl } from "../utils/getAvatarImageUrl";
@@ -24,12 +24,9 @@ export const Avatar: FC<AvatarProps> = ({
   const onImageLoadError = () => setImageSrc(fallbackAvatarSrc);
 
   return (
-    <div className={useCombinedClasses(className, styles.wrapper)}>
+    <div className={combineClasses(className, styles.wrapper)}>
       <div
-        className={useCombinedClasses(
-          styles.avatar,
-          isLeading && styles.leading
-        )}
+        className={combineClasses(styles.avatar, isLeading && styles.leading)}
       >
         <img src={imageSrc} onError={onImageLoadError} />
       </div>

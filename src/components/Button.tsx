@@ -1,5 +1,5 @@
 import type { ComponentPropsWithoutRef, FC } from "react";
-import { useCombinedClasses } from "../hooks/useCombinedClasses";
+import { combineClasses } from "../utils/combineClasses";
 import styles from "./Button.module.scss";
 
 type ButtonSize = "small" | "medium" | "large";
@@ -45,7 +45,7 @@ export const Button: FC<ButtonProps> = ({
   return (
     <button
       {...props}
-      className={useCombinedClasses(
+      className={combineClasses(
         className,
         styles.root,
         getButtonVariantClassName(variant),

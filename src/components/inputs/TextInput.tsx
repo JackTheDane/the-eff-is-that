@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { useCombinedClasses } from "../../hooks/useCombinedClasses";
+import { combineClasses } from "../../utils/combineClasses";
 import styles from "./TextInput.module.scss";
 
 export type TextInputProps = Omit<
@@ -19,7 +19,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       <input
         ref={ref}
         type="text"
-        className={useCombinedClasses(className, styles.input)}
+        className={combineClasses(className, styles.input)}
         value={value}
         onChange={({ target }) => {
           onChange(target.value);

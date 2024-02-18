@@ -3,7 +3,7 @@ import { Quiz } from "../types";
 import { Link } from "react-router-dom";
 
 import styles from "./QuizzesGridItem.module.scss";
-import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
+import { combineClasses } from "../../../utils/combineClasses";
 
 export type QuizzesGridItemProps = {
   quiz: Quiz;
@@ -38,7 +38,7 @@ export const QuizzesGridItem: FC<QuizzesGridItemProps> = ({
     </>
   );
 
-  const combinedClasses = useCombinedClasses(
+  const combinedClasses = combineClasses(
     styles.quizGridItem,
     selected && styles.selected
   );

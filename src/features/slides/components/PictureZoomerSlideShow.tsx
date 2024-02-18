@@ -3,7 +3,7 @@ import styles from "./PictureZoomerSlideShow.module.scss";
 
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../../components/Button";
-import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
+import { combineClasses } from "../../../utils/combineClasses";
 import { useKeyboardEvent } from "../../../hooks/useKeyboardEvent";
 import { ROUTES } from "../../../routes";
 import clamp from "lodash/clamp";
@@ -58,7 +58,7 @@ export const PictureZoomerSlideShow: FC<PictureZoomerSlideShowProps> = ({
         <Button
           onClick={goToPreviousSlide}
           size="large"
-          className={useCombinedClasses(
+          className={combineClasses(
             styles.slideIndexButton,
             slideIndex === 0 && styles.hidden
           )}

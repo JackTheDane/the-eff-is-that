@@ -11,7 +11,7 @@ import { Button, ButtonProps } from "../../../components/Button";
 import { AvatarRegenerationButton } from "../../avatar/components/AvatarRegenerationButton";
 import { generateAvatarSeed } from "../../avatar/utils/generateAvatarSeed";
 import { generatePlayerName } from "../utils/generatePlayerName";
-import { useCombinedClasses } from "../../../hooks/useCombinedClasses";
+import { combineClasses } from "../../../utils/combineClasses";
 
 const playerInfoSchema = z.object({
   name: z.string().max(100).optional(),
@@ -59,7 +59,7 @@ export const PlayerForm: FC<PlayerFormProps> = ({
 
   return (
     <form
-      className={useCombinedClasses(className, styles.playerForm)}
+      className={combineClasses(className, styles.playerForm)}
       onSubmit={handleSubmit((data) => {
         onSubmit({ ...data, name: data.name ? data.name : placeholderName });
 

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import styles from "./Header.module.scss";
-import { useCombinedClasses } from "../hooks/useCombinedClasses";
+import { combineClasses } from "../utils/combineClasses";
 
 export type HeaderProps = {
   className?: string;
@@ -9,8 +9,6 @@ export type HeaderProps = {
 
 export const Header = ({ className, children }: HeaderProps) => {
   return (
-    <div className={useCombinedClasses(className, styles.header)}>
-      {children}
-    </div>
+    <div className={combineClasses(className, styles.header)}>{children}</div>
   );
 };
