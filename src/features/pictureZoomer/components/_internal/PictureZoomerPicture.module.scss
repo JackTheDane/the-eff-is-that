@@ -1,0 +1,27 @@
+.pictureContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  width: 600px;
+  height: 600px;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 3px solid black;
+
+  img {
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+    transition: transform-origin 0.2s, transform 0.3s linear;
+  }
+}
+
+.picturePlaceholder {
+  height: 100%;
+  width: 100%;
+  font-style: italic;
+  color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

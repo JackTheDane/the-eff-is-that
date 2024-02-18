@@ -185,9 +185,11 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
           {selectedSlideField ? (
             <PictureZoomer
               slide={selectedSlideField}
-              showTitle={false}
               key={selectedSlideField.id}
-            />
+            >
+              <PictureZoomer.Picture />
+              <PictureZoomer.Actions />
+            </PictureZoomer>
           ) : (
             "Please select a slide on the right"
           )}

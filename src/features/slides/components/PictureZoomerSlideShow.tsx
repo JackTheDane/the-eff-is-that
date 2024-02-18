@@ -77,7 +77,11 @@ export const PictureZoomerSlideShow: FC<PictureZoomerSlideShowProps> = ({
       )}
 
       <div className={styles.zoomerWrapper}>
-        <PictureZoomer slide={selectedSlide} key={slideIndex} />
+        <PictureZoomer slide={selectedSlide} key={slideIndex}>
+          <PictureZoomer.Title />
+          <PictureZoomer.Picture />
+          <PictureZoomer.Actions />
+        </PictureZoomer>
       </div>
 
       {slideIndex < maxSlideIndex ? (
