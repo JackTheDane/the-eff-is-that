@@ -3,7 +3,7 @@ import { useZoomLevel } from "../../contexts/zoomLevelContext";
 import styles from "./PictureZoomerPicture.module.scss";
 
 export const PictureZoomerPicture = () => {
-  const { selectedSlide, setSelectedSlide } = useSelectedSlide() ?? {};
+  const { selectedSlide } = useSelectedSlide() ?? {};
   const { zoomLevel } = useZoomLevel() ?? {};
 
   return (

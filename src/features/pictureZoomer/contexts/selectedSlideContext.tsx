@@ -1,9 +1,15 @@
-import { ReactNode, createContext, useContext, useMemo, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Slide } from "../../slides/types";
 
 type SelectedSlideContextValue = {
   selectedSlide: Slide | null;
-  setSelectedSlide(slide: Slide): void;
 };
 
 const SelectedSlideContext = createContext<SelectedSlideContextValue | null>(
@@ -19,14 +25,11 @@ export const SelectedSlideContextProvider = ({
   slide,
   children,
 }: SelectedSlideContextProviderProps) => {
-  const [selectedSlide, setSelectedSlide] = useState<Slide>(slide);
-
   const contextValue = useMemo(
     () => ({
-      selectedSlide,
-      setSelectedSlide,
+      selectedSlide: slide,
     }),
-    [selectedSlide, setSelectedSlide]
+    [slide]
   );
 
   return (
