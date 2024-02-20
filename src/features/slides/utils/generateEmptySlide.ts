@@ -1,5 +1,4 @@
 import { generateUniqueId } from "../../id/utils/generateUniqueId";
-import { slideSchema } from "../schemas";
 import { Slide } from "../types";
 
 export const generateEmptySlide = () => {
@@ -10,6 +9,5 @@ export const generateEmptySlide = () => {
       x: 50,
       y: 50,
     },
-    imageSrc: "",
   } satisfies Slide;
 };

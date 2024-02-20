@@ -1,0 +1,25 @@
+.crosshair {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: grey;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: 1;
+  }
+
+  &::after {
+    rotate: 90deg;
+  }
+}
+
+.draggable {
+  cursor: move;
+}

@@ -18,6 +18,8 @@ import { useDeleteQuiz } from "../hooks/useDeleteQuiz";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../routes";
 import { ExportQuizButton } from "./ExportQuizButton";
+import { DraggablePictureZoomer } from "../../pictureZoomer/components/DraggablePictureZoomer";
+import { getPixelDistanceAsPercentage } from "../../pictureZoomer/utils/getPixelDistanceAsPercentage";
 
 export type QuizFormProps = {
   quiz: Quiz;
@@ -123,7 +125,7 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
                 placeholder="Answer"
                 key={`${selectedSlideField.id}-answer`}
               />
-              {selectedSlideField.imageSrc && (
+              {selectedSlideField.image && (
                 <>
                   <FormNumberInput
                     control={control}
@@ -141,11 +143,18 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
               )}
               <FileUploadButton
                 onChange={(imageFile) => {
-                  base64EncodeFile(imageFile)
-                    .then((imageBase64) => {
+                  Promise.all([
+                    base64EncodeFile(imageFile),
+                    createImageBitmap(imageFile),
+                  ])
+                    .then(([imageBase64, { height, width }]) => {
                       update(selectedSlideIndex, {
                         ...selectedSlideField,
-                        imageSrc: imageBase64,
+                        image: {
+                          src: imageBase64,
+                          height,
+                          width,
+                        },
                       });
                     })
                     .catch(console.log);
@@ -154,9 +163,7 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
               >
                 📂
                 <span>
-                  {selectedSlideField.imageSrc
-                    ? "Replace image"
-                    : "Upload image"}
+                  {selectedSlideField.image ? "Replace image" : "Upload image"}
                 </span>
               </FileUploadButton>
               <Button
@@ -183,13 +190,34 @@ export const QuizForm: FC<QuizFormProps> = ({ quiz }) => {
       <div className={styles.formPreviewWrapper}>
         <div className={styles.pictureZoomerWrapper}>
           {selectedSlideField ? (
-            <PictureZoomer
+            <DraggablePictureZoomer
               slide={selectedSlideField}
-              key={selectedSlideField.id}
-            >
-              <PictureZoomer.Picture />
-              <PictureZoomer.Actions />
-            </PictureZoomer>
+              onDragEnd={(dragDistance, zoomLevel) => {
+                if (!selectedSlideField.image) {
+                  return;
+                }
+
+                console.log(dragDistance, zoomLevel);
+
+                const dragDistanceInPercentage = getPixelDistanceAsPercentage(
+                  selectedSlideField.image,
+                  dragDistance,
+                  zoomLevel
+                );
+
+                update(selectedSlideIndex, {
+                  ...selectedSlideField,
+                  centerOrigin: {
+                    x:
+                      selectedSlideField.centerOrigin.x -
+                      dragDistanceInPercentage.x,
+                    y:
+                      selectedSlideField.centerOrigin.y -
+                      dragDistanceInPercentage.y,
+                  },
+                });
+              }}
+            />
           ) : (
             "Please select a slide on the right"
           )}

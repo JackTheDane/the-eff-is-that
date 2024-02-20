@@ -19,10 +19,10 @@ export const SlideCard: FC<SlideCardProps> = ({
     className: combineClasses(styles.slideCard, selected && styles.selected),
     children: (
       <>
-        {slide.imageSrc && (
+        {slide.image && (
           <div className={styles.slidePreview} title={slide.answer}>
             <img
-              src={slide.imageSrc}
+              src={slide.image.src}
               alt={`Preview image for slide "${slide.answer}"`}
             />
           </div>

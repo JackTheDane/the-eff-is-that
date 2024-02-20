@@ -30,7 +30,7 @@ export const QuizzesGridItem: FC<QuizzesGridItemProps> = ({
       <div className={styles.quizSlidePreviewsContainer}>
         {quiz.slides.slice(0, 4).map((slide) => (
           <div className={styles.quizSlidePreview} key={slide.id}>
-            <img src={slide.imageSrc} alt="" />
+            <img src={slide.image?.src} alt="" />
           </div>
         ))}
       </div>
